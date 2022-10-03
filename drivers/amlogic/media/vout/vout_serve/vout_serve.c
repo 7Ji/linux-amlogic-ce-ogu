@@ -62,7 +62,11 @@ static int early_resume_flag;
 #define VMODE_NAME_LEN_MAX    64
 static struct class *vout_class;
 static DEFINE_MUTEX(vout_serve_mutex);
+#ifdef CONFIG_AMLOGIC_LCD
+static char vout_mode_uboot[VMODE_NAME_LEN_MAX] = "panel";
+#else
 static char vout_mode_uboot[VMODE_NAME_LEN_MAX] = "null";
+#endif
 static char vout_mode[VMODE_NAME_LEN_MAX] __nosavedata;
 static char local_name[VMODE_NAME_LEN_MAX] = {0};
 static u32 vout_init_vmode = VMODE_INIT_NULL;
@@ -310,12 +314,19 @@ static int set_vout_init_mode(void)
 
 	vout_init_vmode = validate_vmode(local_name, frac);
 	if (vout_init_vmode >= VMODE_MAX) {
+#ifdef CONFIG_AMLOGIC_LCD
+        VOUTERR("no matched vout_init mode %s, force to panel\n",
+			vout_mode_uboot);
+        snprintf(local_name, VMODE_NAME_LEN_MAX, "%s", "panel");
+        vout_init_vmode = validate_vmode("panel", frac);
+#else
 		VOUTERR("no matched vout_init mode %s, force to invalid\n",
 			vout_mode_uboot);
 		nulldisp_index = 1;
 		vout_init_vmode = nulldisp_vinfo[nulldisp_index].mode;
 		snprintf(local_name, VMODE_NAME_LEN_MAX, "%s",
 			 nulldisp_vinfo[nulldisp_index].name);
+#endif
 	} else { /* recover vout_mode_uboot */
 		snprintf(local_name, VMODE_NAME_LEN_MAX, "%s", vout_mode_uboot);
 	}
