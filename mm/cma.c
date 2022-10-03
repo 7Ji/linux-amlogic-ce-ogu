@@ -646,6 +646,7 @@ struct page *cma_alloc(struct cma *cma, size_t count, unsigned int align)
 	pr_debug("%s(): returned %p\n", __func__, page);
 	return page;
 }
+EXPORT_SYMBOL(cma_alloc);
 
 /**
  * cma_release() - release allocated pages
@@ -685,3 +686,4 @@ bool cma_release(struct cma *cma, const struct page *pages, unsigned int count)
 	return true;
 }
 
+EXPORT_SYMBOL(cma_release);
