@@ -69,6 +69,8 @@ phys_addr_t __fdt_pointer __initdata;
 const char *machine_name;
 EXPORT_SYMBOL(machine_name);
 
+bool emuelec_is_ogu = false;
+
 /*
  * Standard memory resources
  */
@@ -201,6 +203,7 @@ static void __init setup_machine_fdt(phys_addr_t dt_phys)
 	if (name_dtid) {
 		pr_info("CoreELEC dt-id: %s\n", name_dtid);
         if (!strcmp(name_dtid, "g12b_s922x_odroid_go_ultra")) {
+            emuelec_is_ogu = true;
             pr_info("EmuELEC OGU: Warning, OGU on CE kernel is still under heavy development, prepare for major breaks :) - 7Ji");
         }
     }

@@ -27,6 +27,7 @@
 #include <linux/of.h>
 #include <linux/of_fdt.h>
 #include <linux/amlogic/media/vout/lcd/lcd_extern.h>
+#include <linux/platform_data/emuelec.h>
 #include "lcd_extern.h"
 
 #define LCD_EXTERN_NAME			"mipi_ST7701"
@@ -169,7 +170,7 @@ static unsigned char mipi_init_off_table_generic[] = {
 	0xff, 0xff,   /* ending flag */
 };
 
-static int lcd_extern_driver_update(struct aml_lcd_extern_driver_s *ext_drv, int const ogu)
+static int lcd_extern_driver_update(struct aml_lcd_extern_driver_s *ext_drv)
 {
 	if (ext_drv == NULL) {
 		EXTERR("%s driver is null\n", LCD_EXTERN_NAME);
@@ -178,7 +179,7 @@ static int lcd_extern_driver_update(struct aml_lcd_extern_driver_s *ext_drv, int
 
 	ext_drv->config->cmd_size = LCD_EXT_CMD_SIZE_DYNAMIC;
 
-    if (ogu) {
+    if (emuelec_is_ogu) {
         EXTPR("OGU ST7001 update\n");
         ext_drv->config->table_init_on  = &mipi_init_on_table_ogu[0];
         ext_drv->config->table_init_on_cnt  = sizeof(mipi_init_on_table_ogu);
@@ -198,16 +199,16 @@ static int lcd_extern_driver_update(struct aml_lcd_extern_driver_s *ext_drv, int
 int aml_lcd_extern_mipi_st7701_probe(struct aml_lcd_extern_driver_s *ext_drv)
 {
 	int ret = 0;
-    char const *const ce_id = of_flat_dt_get_coreelec_dt_id();
-    int ogu = 0;
-    if (ce_id) {
-        if (!strcmp(ce_id, "g12b_s922x_odroid_go_ultra")) {
-            EXTPR("Device is OGU, running its specific init\n");
-            ogu = 1;
-        }
-    } else {
-        EXTPR("Failed to get CE_ID to determine whether it's OGU or not\n");
-    }
+    // char const *const ce_id = of_flat_dt_get_coreelec_dt_id();
+    // int ogu = 0;
+    // if (ce_id) {
+    //     if (!strcmp(ce_id, "g12b_s922x_odroid_go_ultra")) {
+    //         EXTPR("Device is OGU, running its specific init\n");
+    //         ogu = 1;
+    //     }
+    // } else {
+    //     EXTPR("Failed to get CE_ID to determine whether it's OGU or not\n");
+    // }
     // if (of_property_read_string(of_root, "coreelec-dt-id", &model_name)) {
     //     if (lcd_debug_print_flag) {
 	// 	    EXTPR("%s: %d\n", __func__, ret);
@@ -215,7 +216,7 @@ int aml_lcd_extern_mipi_st7701_probe(struct aml_lcd_extern_driver_s *ext_drv)
     // } else if (!strcmp(model_name, "Hardkernel ODROID-GOU")) {
     //     ogu = true;
     // }
-    ret = lcd_extern_driver_update(ext_drv, ogu);
+    ret = lcd_extern_driver_update(ext_drv);
 
 	if (lcd_debug_print_flag)
 		EXTPR("%s: %d\n", __func__, ret);

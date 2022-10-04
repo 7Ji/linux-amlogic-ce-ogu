@@ -42,6 +42,7 @@
 #include <linux/mmc/emmc_partitions.h>
 #include <linux/amlogic/amlsd.h>
 #include <linux/amlogic/aml_sd_emmc_v3.h>
+#include <linux/platform_data/emuelec.h>
 
 struct mmc_host *sdio_host;
 
@@ -2967,20 +2968,25 @@ static int meson_mmc_get_cd(struct mmc_host *mmc)
 
 int aml_signal_voltage_switch(struct mmc_host *mmc, struct mmc_ios *ios)
 {
-	// return aml_sd_voltage_switch(mmc, ios->signal_voltage);
-    struct amlsd_platform *pdata = mmc_priv(mmc);
-	int ret = 0;
+    if (emuelec_is_ogu) {
+        pr_info("Voltage switch: OGU logic\n");
+        struct amlsd_platform *pdata = mmc_priv(mmc);
+        int ret = 0;
 
-	if (pdata->vol_switch) {
-		ret = aml_sd_voltage_switch(mmc, ios->signal_voltage);
-		if (ret)
-			dev_warn(mmc_dev(mmc), "Voltage switch failed\n");
-	} else {
-		ret = mmc_regulator_set_vqmmc(mmc, ios);
-		if (ret)
-			dev_warn(mmc_dev(mmc), "Regulator switch failed\n");
-	}
-	return ret;
+        if (pdata->vol_switch) {
+            ret = aml_sd_voltage_switch(mmc, ios->signal_voltage);
+            if (ret)
+                dev_warn(mmc_dev(mmc), "Voltage switch failed\n");
+        } else {
+            ret = mmc_regulator_set_vqmmc(mmc, ios);
+            if (ret)
+                dev_warn(mmc_dev(mmc), "Regulator switch failed\n");
+        }
+        return ret;
+    } else {
+        pr_info("Voltage switch: Generic logic\n");
+        return aml_sd_voltage_switch(mmc, ios->signal_voltage);
+    }
 }
 
 /* Check if the card is pulling dat[0:3] low */
@@ -3346,8 +3352,10 @@ static int meson_mmc_probe(struct platform_device *pdev)
 			writel(boot_poll_en, host->pinmux_base
 					+ (host->data->ds_pin_poll_en << 2));
 		}
-        ret = mmc_regulator_get_supply(mmc);
-
+        if (emuelec_is_ogu) {
+            pr_info("MMC probe: OGU logic, try to get supply from regulator\n");
+            ret = mmc_regulator_get_supply(mmc);
+        }
 		if (aml_card_type_mmc(pdata)
 				&& (host->ctrl_ver < 3))
 			/**set emmc tx_phase regs here base on dts**/
