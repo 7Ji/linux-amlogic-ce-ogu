@@ -104,6 +104,7 @@ config SND_SOC_ALL_CODECS
 	select SND_SOC_PCM5102A
 	select SND_SOC_PCM512x_I2C if I2C
 	select SND_SOC_PCM512x_SPI if SPI_MASTER
+	select SND_SOC_RK817 if I2C
 	select SND_SOC_RT286 if I2C
 	select SND_SOC_RT298 if I2C
 	select SND_SOC_RT5514 if I2C
@@ -645,6 +646,11 @@ config SND_SOC_PCM512x_SPI
 	select SND_SOC_PCM512x
 	select REGMAP_SPI
 
+config SND_SOC_RK817
+	tristate "Rockchip RK817 CODEC"
+	depends on MFD_RK808
+	select REGMAP_I2C
+    
 config SND_SOC_RL6231
 	tristate
 	default y if SND_SOC_RT5514=y
