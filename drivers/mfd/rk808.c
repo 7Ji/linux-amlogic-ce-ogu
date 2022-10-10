@@ -28,11 +28,13 @@
 #include <linux/regmap.h>
 #include <linux/syscore_ops.h>
 
-// #ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#define CONFIG_ARCH_MESON64_ODROID_COMMON
+
+#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
 #include <linux/gpio.h>
 #include <linux/of_gpio.h>
 #include <linux/arm-smccc.h>
-// #endif
+#endif
 
 struct rk808_reg_data {
 	int addr;
@@ -98,7 +100,7 @@ static struct rk808_reg_data *suspend_reg, *resume_reg;
 static int suspend_reg_num, resume_reg_num;
 
 
-// #ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
 static noinline int psci_fn_smc(u64 function_id, u64 arg0, u64 arg1,
                                         u64 arg2)
 {
@@ -119,7 +121,7 @@ static void do_aml_poweroff(void)
 	psci_fn_smc(0x84000008, 0, 0, 0);
 }
 
-// #endif
+#endif
 
 
 static int rk808_shutdown(struct regmap *regmap)
@@ -584,12 +586,12 @@ static struct regmap_irq_chip rk816_battery_irq_chip = {
 };
 
 static const struct mfd_cell rk818s[] = {
-// #ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
 	{ .name = "rk818-regulator", },
-// #else
-// 	{ .name = "rk808-clkout", },
-// 	{ .name = "rk808-regulator", },
-// #endif
+#else
+	{ .name = "rk808-clkout", },
+	{ .name = "rk808-regulator", },
+#endif
 	{ .name = "rk818-battery", .of_compatible = "rk818-battery", },
 	{ .name = "rk818-charger", },
 	{
@@ -600,7 +602,7 @@ static const struct mfd_cell rk818s[] = {
 };
 
 static const struct rk808_reg_data rk818_pre_init_reg[] = {
-// #ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
 	{ RK818_BUCK1_ON_VSEL_REG, 0x3f, 0x1a},//vdd_cpu_a : default 1.0375
 	{ RK818_BUCK1_SLP_VSEL_REG, 0x3f, 0x1a},//vdd_cpu_a : default 1.0375
 	{ RK818_BUCK2_ON_VSEL_REG, 0x3f, 0x0d},//vdd_ee : default 0.875
@@ -624,16 +626,16 @@ static const struct rk808_reg_data rk818_pre_init_reg[] = {
 			LDO9_EN_ENABLE | SWITCH_EN_ENABLE },
 	{ RK818_SLEEP_SET_OFF_REG1, OTG_SLP_SET_MASK, OTG_SLP_SET_OFF },
 	{ RK808_RTC_CTRL_REG, RTC_STOP, RTC_STOP},
-// #else
-// 	{ RK818_H5V_EN_REG, REF_RDY_CTRL_ENABLE | H5V_EN_MASK,
-// 					REF_RDY_CTRL_ENABLE | H5V_EN_ENABLE },
-// 	{ RK818_DCDC_EN_REG, BOOST_EN_MASK | SWITCH_EN_MASK,
-// 					BOOST_EN_ENABLE | SWITCH_EN_ENABLE },
-// 	{ RK818_SLEEP_SET_OFF_REG1, OTG_SLP_SET_MASK, OTG_SLP_SET_OFF },
-// 	{ RK818_BUCK4_CONFIG_REG, BUCK_ILMIN_MASK,  BUCK_ILMIN_250MA },
-// 	{ RK808_RTC_CTRL_REG, RTC_STOP, RTC_STOP},
-// 	{ RK808_CLK32OUT_REG, CLK32KOUT2_FUNC_MASK, CLK32KOUT2_FUNC},
-// #endif
+#else
+	{ RK818_H5V_EN_REG, REF_RDY_CTRL_ENABLE | H5V_EN_MASK,
+					REF_RDY_CTRL_ENABLE | H5V_EN_ENABLE },
+	{ RK818_DCDC_EN_REG, BOOST_EN_MASK | SWITCH_EN_MASK,
+					BOOST_EN_ENABLE | SWITCH_EN_ENABLE },
+	{ RK818_SLEEP_SET_OFF_REG1, OTG_SLP_SET_MASK, OTG_SLP_SET_OFF },
+	{ RK818_BUCK4_CONFIG_REG, BUCK_ILMIN_MASK,  BUCK_ILMIN_250MA },
+	{ RK808_RTC_CTRL_REG, RTC_STOP, RTC_STOP},
+	{ RK808_CLK32OUT_REG, CLK32KOUT2_FUNC_MASK, CLK32KOUT2_FUNC},
+#endif
 };
 
 static struct rk808_reg_data rk818_suspend_reg[] = {
@@ -649,7 +651,7 @@ static struct rk808_reg_data rk818_resume_reg[] = {
 };
 
 static const struct regmap_irq rk818_irqs[] = {
-// #ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
 	/* INT_STS2 */
 	[RK818_IRQ_PLUG_IN] = {
 		.mask = PLUG_IN_MASK,
@@ -683,74 +685,74 @@ static const struct regmap_irq rk818_irqs[] = {
 		.mask = DISCHG_ILIM_MASK,
 		.reg_offset = 1,
 	},
-// #else
-// 	/* INT_STS */
-// 	[RK818_IRQ_VOUT_LO] = {
-// 		.mask = VOUT_LO_MASK,
-// 		.reg_offset = 0,
-// 	},
-// 	[RK818_IRQ_VB_LO] = {
-// 		.mask = VB_LO_MASK,
-// 		.reg_offset = 0,
-// 	},
-// 	[RK818_IRQ_PWRON] = {
-// 		.mask = PWRON_MASK,
-// 		.reg_offset = 0,
-// 	},
-// 	[RK818_IRQ_PWRON_LP] = {
-// 		.mask = PWRON_LP_MASK,
-// 		.reg_offset = 0,
-// 	},
-// 	[RK818_IRQ_HOTDIE] = {
-// 		.mask = HOTDIE_MASK,
-// 		.reg_offset = 0,
-// 	},
-// 	[RK818_IRQ_RTC_ALARM] = {
-// 		.mask = RTC_ALARM_MASK,
-// 		.reg_offset = 0,
-// 	},
-// 	[RK818_IRQ_RTC_PERIOD] = {
-// 		.mask = RTC_PERIOD_MASK,
-// 		.reg_offset = 0,
-// 	},
-// 	[RK818_IRQ_USB_OV] = {
-// 		.mask = USB_OV_MASK,
-// 		.reg_offset = 0,
-// 	},
-// 	/* INT_STS2 */
-// 	[RK818_IRQ_PLUG_IN] = {
-// 		.mask = PLUG_IN_MASK,
-// 		.reg_offset = 1,
-// 	},
-// 	[RK818_IRQ_PLUG_OUT] = {
-// 		.mask = PLUG_OUT_MASK,
-// 		.reg_offset = 1,
-// 	},
-// 	[RK818_IRQ_CHG_OK] = {
-// 		.mask = CHGOK_MASK,
-// 		.reg_offset = 1,
-// 	},
-// 	[RK818_IRQ_CHG_TE] = {
-// 		.mask = CHGTE_MASK,
-// 		.reg_offset = 1,
-// 	},
-// 	[RK818_IRQ_CHG_TS1] = {
-// 		.mask = CHGTS1_MASK,
-// 		.reg_offset = 1,
-// 	},
-// 	[RK818_IRQ_TS2] = {
-// 		.mask = TS2_MASK,
-// 		.reg_offset = 1,
-// 	},
-// 	[RK818_IRQ_CHG_CVTLIM] = {
-// 		.mask = CHG_CVTLIM_MASK,
-// 		.reg_offset = 1,
-// 	},
-// 	[RK818_IRQ_DISCHG_ILIM] = {
-// 		.mask = DISCHG_ILIM_MASK,
-// 		.reg_offset = 1,
-// 	},
-// #endif
+#else
+	/* INT_STS */
+	[RK818_IRQ_VOUT_LO] = {
+		.mask = VOUT_LO_MASK,
+		.reg_offset = 0,
+	},
+	[RK818_IRQ_VB_LO] = {
+		.mask = VB_LO_MASK,
+		.reg_offset = 0,
+	},
+	[RK818_IRQ_PWRON] = {
+		.mask = PWRON_MASK,
+		.reg_offset = 0,
+	},
+	[RK818_IRQ_PWRON_LP] = {
+		.mask = PWRON_LP_MASK,
+		.reg_offset = 0,
+	},
+	[RK818_IRQ_HOTDIE] = {
+		.mask = HOTDIE_MASK,
+		.reg_offset = 0,
+	},
+	[RK818_IRQ_RTC_ALARM] = {
+		.mask = RTC_ALARM_MASK,
+		.reg_offset = 0,
+	},
+	[RK818_IRQ_RTC_PERIOD] = {
+		.mask = RTC_PERIOD_MASK,
+		.reg_offset = 0,
+	},
+	[RK818_IRQ_USB_OV] = {
+		.mask = USB_OV_MASK,
+		.reg_offset = 0,
+	},
+	/* INT_STS2 */
+	[RK818_IRQ_PLUG_IN] = {
+		.mask = PLUG_IN_MASK,
+		.reg_offset = 1,
+	},
+	[RK818_IRQ_PLUG_OUT] = {
+		.mask = PLUG_OUT_MASK,
+		.reg_offset = 1,
+	},
+	[RK818_IRQ_CHG_OK] = {
+		.mask = CHGOK_MASK,
+		.reg_offset = 1,
+	},
+	[RK818_IRQ_CHG_TE] = {
+		.mask = CHGTE_MASK,
+		.reg_offset = 1,
+	},
+	[RK818_IRQ_CHG_TS1] = {
+		.mask = CHGTS1_MASK,
+		.reg_offset = 1,
+	},
+	[RK818_IRQ_TS2] = {
+		.mask = TS2_MASK,
+		.reg_offset = 1,
+	},
+	[RK818_IRQ_CHG_CVTLIM] = {
+		.mask = CHG_CVTLIM_MASK,
+		.reg_offset = 1,
+	},
+	[RK818_IRQ_DISCHG_ILIM] = {
+		.mask = DISCHG_ILIM_MASK,
+		.reg_offset = 1,
+	},
+#endif
 };
 
 static struct regmap_irq_chip rk818_irq_chip = {
@@ -889,7 +891,7 @@ static struct regmap_irq_chip rk817_irq_chip = {
 };
 
 static const struct mfd_cell rk817s[] = {
-// #ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
 	{ .name = "rk808-regulator",},
 	{
 		.name = "rk8xx-pwrkey",
@@ -900,30 +902,30 @@ static const struct mfd_cell rk817s[] = {
 		.name = "rk817-codec",
 		.of_compatible = "rockchip,rk817-codec",
 	},
-// #else
-// 	{ .name = "rk808-clkout",},
-// 	{ .name = "rk808-regulator",},
-// 	{ .name = "rk817-battery", .of_compatible = "rk817,battery", },
-// 	{ .name = "rk817-charger", .of_compatible = "rk817,charger", },
-// 	{
-// 		.name = "rk8xx-pwrkey",
-// 		.num_resources = ARRAY_SIZE(rk817_pwrkey_resources),
-// 		.resources = &rk817_pwrkey_resources[0],
-// 	},
-// 	{
-// 		.name = "rk808-rtc",
-// 		.num_resources = ARRAY_SIZE(rk817_rtc_resources),
-// 		.resources = &rk817_rtc_resources[0],
-// 	},
-// 	{
-// 		.name = "rk817-codec",
-// 		.of_compatible = "rockchip,rk817-codec",
-// 	},
-// #endif
+#else
+	{ .name = "rk808-clkout",},
+	{ .name = "rk808-regulator",},
+	{ .name = "rk817-battery", .of_compatible = "rk817,battery", },
+	{ .name = "rk817-charger", .of_compatible = "rk817,charger", },
+	{
+		.name = "rk8xx-pwrkey",
+		.num_resources = ARRAY_SIZE(rk817_pwrkey_resources),
+		.resources = &rk817_pwrkey_resources[0],
+	},
+	{
+		.name = "rk808-rtc",
+		.num_resources = ARRAY_SIZE(rk817_rtc_resources),
+		.resources = &rk817_rtc_resources[0],
+	},
+	{
+		.name = "rk817-codec",
+		.of_compatible = "rockchip,rk817-codec",
+	},
+#endif
 };
 
 static const struct rk808_reg_data rk817_pre_init_reg[] = {
-// #ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
 	{RK817_BUCK2_ON_VSEL_REG, 0x7f, 0x2B},	/*vddcpu_b : 1.0375 (default)*/
 	{RK817_BUCK3_ON_VSEL_REG, 0x7f, 0x20},	/*vcc_2v3 : 2.4 (default)*/
 
@@ -931,12 +933,12 @@ static const struct rk808_reg_data rk817_pre_init_reg[] = {
 	{RK817_POWER_EN_REG(1), 0xff, 0x88},
 	{RK817_SYS_CFG(1), RK817_HOTDIE_TEMP_MSK | RK817_TSD_TEMP_MSK,
 					   RK817_HOTDIE_105 | RK817_TSD_140},
-// #else
-// 	{RK817_RTC_CTRL_REG, RTC_STOP, RTC_STOP},
-// 	{RK817_GPIO_INT_CFG, RK817_INT_POL_MSK, RK817_INT_POL_L},
-// 	{RK817_SYS_CFG(1), RK817_HOTDIE_TEMP_MSK | RK817_TSD_TEMP_MSK,
-// 					   RK817_HOTDIE_105 | RK817_TSD_140},
-// #endif
+#else
+	{RK817_RTC_CTRL_REG, RTC_STOP, RTC_STOP},
+	{RK817_GPIO_INT_CFG, RK817_INT_POL_MSK, RK817_INT_POL_L},
+	{RK817_SYS_CFG(1), RK817_HOTDIE_TEMP_MSK | RK817_TSD_TEMP_MSK,
+					   RK817_HOTDIE_105 | RK817_TSD_140},
+#endif
 };
 
 static void rk808_device_shutdown_prepare(void)
@@ -1167,22 +1169,22 @@ static int rk817_reboot_notifier_handler(struct notifier_block *nb,
 	struct rk817_reboot_data_t *data;
 	int ret;
 	struct device *dev;
-// #ifndef CONFIG_ARCH_MESON64_ODROID_COMMON
-// 	int value, power_en_active0, power_en_active1;
+#ifndef CONFIG_ARCH_MESON64_ODROID_COMMON
+	int value, power_en_active0, power_en_active1;
 
-// 	regmap_read(data->rk808->regmap, RK817_POWER_EN_SAVE0,
-// 		&power_en_active0);
-// 	regmap_read(data->rk808->regmap, RK817_POWER_EN_SAVE1,
-// 		&power_en_active1);
-// 	value = power_en_active0 & 0x0f;
-// 	regmap_write(data->rk808->regmap, RK817_POWER_EN_REG(0), value | 0xf0);
-// 	value = (power_en_active0 & 0xf0) >> 4;
-// 	regmap_write(data->rk808->regmap, RK817_POWER_EN_REG(1), value | 0xf0);
-// 	value = power_en_active1 & 0x0f;
-// 	regmap_write(data->rk808->regmap, RK817_POWER_EN_REG(2), value | 0xf0);
-// 	value = (power_en_active1 & 0xf0) >> 4;
-// 	regmap_write(data->rk808->regmap, RK817_POWER_EN_REG(3), value | 0xf0);
-// #endif
+	regmap_read(data->rk808->regmap, RK817_POWER_EN_SAVE0,
+		&power_en_active0);
+	regmap_read(data->rk808->regmap, RK817_POWER_EN_SAVE1,
+		&power_en_active1);
+	value = power_en_active0 & 0x0f;
+	regmap_write(data->rk808->regmap, RK817_POWER_EN_REG(0), value | 0xf0);
+	value = (power_en_active0 & 0xf0) >> 4;
+	regmap_write(data->rk808->regmap, RK817_POWER_EN_REG(1), value | 0xf0);
+	value = power_en_active1 & 0x0f;
+	regmap_write(data->rk808->regmap, RK817_POWER_EN_REG(2), value | 0xf0);
+	value = (power_en_active1 & 0xf0) >> 4;
+	regmap_write(data->rk808->regmap, RK817_POWER_EN_REG(3), value | 0xf0);
+#endif
 
 	if (action != SYS_RESTART)
 		return NOTIFY_OK;
@@ -1279,10 +1281,10 @@ static int rk808_probe(struct i2c_client *client,
 	void (*of_property_prepare_fn)(struct rk808 *rk808,
 				       struct device *dev) = NULL;
 	int (*pinctrl_init)(struct device *dev, struct rk808 *rk808) = NULL;
-// #ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
 	int irq_gpio;
 	char sysfs_name[8];
-// #endif
+#endif
 	rk808 = devm_kzalloc(&client->dev, sizeof(*rk808), GFP_KERNEL);
 	if (!rk808)
 		return -ENOMEM;
@@ -1311,7 +1313,7 @@ static int rk808_probe(struct i2c_client *client,
 	sprintf(sysfs_name, "rk%lx", rk808->variant);
 	dev_info(&client->dev, "Pmic Chip id: 0x%lx, sysfs: %s\n", rk808->variant,sysfs_name);
 
-// #ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
 	irq_gpio = of_get_named_gpio(np, "gpio-irq", 0);
 	if (irq_gpio < 0) {
 		dev_err(&client->dev, "No interrupt pin, no core IRQ\n");
@@ -1331,7 +1333,7 @@ static int rk808_probe(struct i2c_client *client,
 	if (client->irq)
 		dev_info(&client->dev, "Pmic irq gpio irq number : %d\n", client->irq);
 
-// #endif
+#endif
 	/* set Chip platform init data*/
 	switch (rk808->variant) {
 	case RK816_ID:
