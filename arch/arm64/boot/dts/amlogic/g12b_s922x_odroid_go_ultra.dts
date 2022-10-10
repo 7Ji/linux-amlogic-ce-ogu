@@ -38,15 +38,7 @@
     vout2 { // This is not a label, so it can't be simply disabled at the end
         /delete-property/ fr_policy;
         status = "disabled";
-        // clocks = <&clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 64)>,
-                // <&clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 69)>;
     };
-
-    // ge2d {
-    //     clocks = <&clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 17)>,
-    //             <&clkc ((33 + 22) + 6)>,
-    //             <&clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 18)>;
-    // };
 
     gpiomem {
 		compatible = "amlogic, gpiomem";
@@ -454,14 +446,6 @@
 		};
 	};
 
-    // vpu {
-    //     clocks =    <&clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 17)>,
-    //                 <&clkc (((33 + 22) + 13) + 8)>,
-    //                 <&clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 3)>,
-    //                 <&clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 7)>,
-    //                 <&clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 8)>;
-    // };
-
     soc {
         ion_dev {
             memory-region = <&ion_cma_reserved>;
@@ -629,21 +613,8 @@
 
     galcore {
         status = "disabled";
-        // clocks = <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 11)>,
-        // <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 10)>;
         /delete-property/ memory-region;
     };
-
-    // mesonstream {
-    //     clocks = <&clkc ((33 + 22) + 9)
-    //                 &clkc ((33 + 22) + 2)
-    //                 &clkc ((33 + 22) + 12)
-    //                 &clkc (33 + 1)
-    //                 &clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 33)
-    //                 &clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 42)
-    //                 &clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 51)
-    //                 &clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 60)>;
-    // };
 
     nand: nfc@0 {
         compatible = "amlogic, aml_mtd_nand";
@@ -655,8 +626,6 @@
         pinctrl-0 = <&all_nand_pins>;
         pinctrl-1 = <&all_nand_pins>;
         pinctrl-2 = <&nand_cs_pins>;
-        // clocks = <&clkc (33 + 20)>,
-        //     <&clkc (((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 11)>;
         clock-names = "core", "clkin";
         device_id = <0>;
         bl_mode = <1>;
@@ -890,11 +859,6 @@
 	mmc-hs200-1_8v;
 	vmmc-supply = <&vcc_sd>;
 	vqmmc-supply = <&vddio_ao1v8>;
-    // // clocks = <&clkc (33 + 20)>,
-    // //         <&clkc (((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 11)>,
-    // //         <&clkc 2>,
-    // //         <&clkc 32>,
-    // //         <&xtal>;
 	emmc {
         // /delete-property/ save_para;
 		// /delete-property/ compute_cmd_delay;
@@ -922,11 +886,6 @@
 	// max-frequency = <200000000>;
 	// vmmc-supply = <&vcc_sd>;
 	// vqmmc-supply = <&vddio_c>;
-    // // clocks = <&clkc (33 + 19)>,
-    // //         <&clkc (((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 7)>,
-    // //         <&clkc 2>,
-    // //         <&clkc 5>,
-    // //         <&xtal>;
 	// sd {
 	// 	caps = "MMC_CAP_4_BIT_DATA",
 	// 		 "MMC_CAP_MMC_HIGHSPEED",
@@ -944,11 +903,6 @@
 
 &sd_emmc_a {
     status = "disabled";
-    // clocks = <&clkc (33 + 18)>,
-    //         <&clkc (((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 3)>,
-    //         <&clkc 2>,
-    //         <&clkc 5>,
-    //         <&xtal>;
     sdio {
         /delete-property/ caps;
         /delete-property/ f_min;
@@ -958,7 +912,6 @@
 
 &gpu {
     min_clk = <4>;
-    // clocks = <&clkc ((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 8) &clkc 7>;
 };
 
 &dvfs285_cfg {
@@ -977,45 +930,8 @@
    threshold = <230 255>;
 };
 
-// &CPU0 {
-//     clocks =    <&clkc 23>,
-//                 <&clkc 22>,
-//                 <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 17)>;
-// };
-
-// &CPU1 {
-//     clocks =    <&clkc 23>,
-//                 <&clkc 22>,
-//                 <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 17)>;
-// };
-
-// &CPU2 {
-//     clocks =    <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 1)>,
-//                 <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 0)>,
-//                 <&clkc 0>;
-// };
-
-// &CPU3{
-//     clocks =    <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 1)>,
-//                 <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 0)>,
-//                 <&clkc 0>;
-// };
-
-// &CPU4 {
-//     clocks =    <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 1)>,
-//                 <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 0)>,
-//                 <&clkc 0>;
-// };
-
-// &CPU5 {
-//     clocks =    <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 1)>,
-//                 <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 0)>,
-//                 <&clkc 0>;
-// };
-
 &ethmac {
     status = "disabled";
-    // clocks = <&clkc ((33 + 22) + 1)>;
     /delete-property/ mc_val;
     /delete-property/ internal_phy;
 	/delete-property/ pinctrl-names;
@@ -1058,23 +974,17 @@
 
 &dwc3 {
 	status = "okay";
-    // clocks = <&clkc ((33 + 22) + 10)>;
 };
 
 &dwc2_a {
 	status = "okay";
 	/** 0: normal, 1: otg+dwc3 host only, 2: otg+dwc3 device only*/
 	controller-type = <3>;
-    // clocks = <&clkc ((33 + 22) + 10)
-    //             &clkc (((33 + 22) + 13) + 5)>;
 };
 
 &pcie_A {
 	reset-gpio = <&gpio GPIOX_7 GPIO_ACTIVE_HIGH>;
 	status = "disabled";
-    // clocks = <&clkc 24
-    //         &clkc ((33 + 22) + 8)
-    //         &clkc ((33 + 22) + 11)>;
     clock-names = "pcie_refpll",
                 "pcie",
                 "pcie_phy";
@@ -1090,45 +1000,23 @@
 
 &saradc {
 	status = "okay";
-    // clocks = <&xtal>, <&clkc (((((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 18) + 19) + 3)>;
 };
-
-// &p_tsensor {
-//     clocks = <&clkc ((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 8)>;
-// };
-
-// &d_tsensor {
-//     clocks = <&clkc ((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 8)>;
-// };
 
 &i2c0 {
-    // clocks = <&clkc (33 + 9)>;
 	/delete-property/ pinctrl-names;
 	/delete-property/ pinctrl-0;
 	/delete-property/ clock-frequency;
 };
-
-// &i2c1 {
-//     clocks = <&clkc (33 + 9)>;
-// };
 
 &i2c2 {
-    // clocks = <&clkc (33 + 9)>;
 	/delete-property/ pinctrl-names;
 	/delete-property/ pinctrl-0;
 	/delete-property/ clock-frequency;
-};
-
-&i2c3 {
-    // clocks = <&clkc (33 + 9)>;
 };
 
 &isp {
 	status = "disabled";
     temper-buf-size = <24>;
-    // clocks = <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 13)>,
-    //         <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 14)>;
-    
     /delete-property/ temper-line-offset;
 	/delete-property/ temper-frame-num;
 	/delete-property/ temper-frame-size;
@@ -1143,11 +1031,6 @@
 
 &amhdmitx {
 	status = "disabled";
-    // clocks = <&clkc ((((33 + 22) + 13) + 10) + 7)
-    //         &clkc ((((33 + 22) + 13) + 10) + 0)
-    //         &clkc ((((33 + 22) + 13) + 10) + 1)
-    //         &clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 17)
-    //         &clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 8)>;
     interrupts = <0 57 1>;
     interrupt-names = "hdmitx_hpd";
 };
@@ -1159,16 +1042,6 @@
     arc_port_mask = <0x02>;
     /delete-property/ output;
 };
-
-// &spicc0 {
-//     clocks = <&clkc (33 + 8)>,
-//       <&clkc ((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 3)>;
-// };
-
-// &spicc1 {
-//     clocks = <&clkc (33 + 14)>,
-//       <&clkc ((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 7)>;
-// };
 
 &cbus {
     spifc: spifc@14000 {
@@ -1182,25 +1055,9 @@
    };
 };
 
-// &i2c_AO {
-//     clocks = <&clkc (33 + 9)>;
-// };
-
 &uart_A {
     status = "disabled";
-    // clocks = <&xtal
-            // &clkc (33 + 13)>;
 };
-
-// &uart_B {
-//     clocks = <&xtal
-//             &clkc ((33 + 22) + 5)>;
-// };
-
-// &uart_C {
-//     clocks = <&xtal
-//             &clkc ((33 + 22) + 5)>;
-// };
 
 &vdin0 {
     /delete-property/ cma_size;
@@ -1211,16 +1068,6 @@
     /delete-property/ memory-region;
     /delete-property/ tv_bit_mode;
 };
-
-// &gdc {
-//     clocks = <&clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 8)
-//             &clkc (((((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 74) + 15) + 9) >;
-// };
-
-// &meson_fb {
-//     /delete-property/ 4k2k_fb;
-//     clocks = <&clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 69)>;
-// };
 
 &meson_cooldev {
     cooling_devices {
