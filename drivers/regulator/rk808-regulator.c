@@ -31,6 +31,8 @@
 #include <linux/regulator/of_regulator.h>
 #include <linux/gpio/consumer.h>
 
+#define CONFIG_ARCH_MESON64_ODROID_COMMON
+
 /* Field Definitions */
 #define RK808_BUCK_VSEL_MASK	0x3f
 #define RK808_BUCK4_VSEL_MASK	0xf
