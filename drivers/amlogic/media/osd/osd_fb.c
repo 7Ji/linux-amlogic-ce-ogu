@@ -1964,8 +1964,6 @@ __setup("monitor_onoff=", osd_setup_monitor_onoff);
 int osd_blank(int blank_mode, struct fb_info *info)
 {
 	osd_enable_hw(info->node, (blank_mode != 0) ? 0 : 1);
-	return 0;
-}
 
 #ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
 	if (!monitor_onoff_action)
@@ -1985,6 +1983,9 @@ int osd_blank(int blank_mode, struct fb_info *info)
 		break;
 	}
 #endif
+
+	return 0;
+}
 
 static int osd_pan_display(struct fb_var_screeninfo *var,
 			   struct fb_info *fbi)
