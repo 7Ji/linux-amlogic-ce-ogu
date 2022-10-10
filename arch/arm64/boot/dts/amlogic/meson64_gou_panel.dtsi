@@ -103,7 +103,7 @@
 
 		extern_0{
 			index = <0>;
-			extern_name = "mipi_ST7701";/*ST7701*/
+			extern_name = "mipi_default";/*ST7701*/
 			status = "okay";
 			type = <2>; /* 0=i2c, 1=spi, 2=mipi */
 			cmd_size = <0xff>;
