@@ -668,30 +668,6 @@
     ddr_bandwidth {
         /delete-property/ sec_base;
     };
-    
-    // lcd {
-    //     clocks = <&clkc (33 + 3)
-    //             &clkc (33 + 16)
-    //             &clkc (((((((((33 + 22) + 13) + 10) + 19) + 1) + 5) + 20) + 9) + 22)
-    //             &clkc ((((33 + 22) + 13) + 10) + 15)
-    //             &clkc ((((33 + 22) + 13) + 10) + 17)
-    //             &clkc 7>;
-    // };
-    lcd {
-        lcd_0 {
-            power_on_step = <
-                0 1 0 100
-                0 0 0 10
-                0 0 1 20
-                3 0 0 0
-                0xff 0 0 0>;
-            power_off_step = <
-                3 0 0 50
-                0 0 0 10
-                0 1 1 100
-                0xff 0 0 0>;
-        };
-    };
 }; /* end of / */
 
 &meson_fb {
