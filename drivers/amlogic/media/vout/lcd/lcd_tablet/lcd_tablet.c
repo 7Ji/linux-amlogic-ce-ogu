@@ -507,6 +507,7 @@ static void lcd_tablet_vinfo_update_default(void)
 	unsigned int h_active, v_active, h_total, v_total;
 
 	if (!lcd_drv)
+		LCDERR("no lcd_drv\n");
 		return;
 
 	if (lcd_drv->lcd_info == NULL) {

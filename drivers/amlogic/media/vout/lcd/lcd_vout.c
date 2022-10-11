@@ -1089,11 +1089,13 @@ static void lcd_init_vout(void)
 	switch (lcd_driver->lcd_mode) {
 #ifdef CONFIG_AMLOGIC_LCD_TV
 	case LCD_MODE_TV:
+		LCDPR("Initializing TV vout server\n");
 		lcd_tv_vout_server_init();
 		break;
 #endif
 #ifdef CONFIG_AMLOGIC_LCD_TABLET
 	case LCD_MODE_TABLET:
+		LCDPR("Initializing tablet vout server\n");
 		lcd_tablet_vout_server_init();
 		break;
 #endif
@@ -1358,8 +1360,8 @@ static int lcd_config_probe(struct platform_device *pdev)
 		break;
 	}
 
-	LCDPR("detect mode: %s, fr_auto_policy: %d, key_valid: %d\n",
-		str, lcd_driver->fr_auto_policy, lcd_driver->lcd_key_valid);
+	LCDPR("detect mode: %s, mode no: %u, fr_auto_policy: %d, key_valid: %d\n",
+		str, lcd_driver->lcd_mode, lcd_driver->fr_auto_policy, lcd_driver->lcd_key_valid);
 
 	ret = of_property_read_u32(lcd_driver->dev->of_node, "clk_path", &val);
 	if (ret) {
