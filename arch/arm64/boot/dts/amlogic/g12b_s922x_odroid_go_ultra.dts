@@ -8,39 +8,39 @@
 #include "meson64_gou_joypad.dtsi"
 
 / {
-    model = "Hardkernel ODROID-GOU";
-    coreelec-dt-id = "g12b_s922x_odroid_go_ultra"; // Yeah we will still use coreelec-dt-id, never re-invent the wheel huh?
-    amlogic-dt-id = "g12b_ogu";
+	model = "Hardkernel ODROID-GOU";
+	coreelec-dt-id = "g12b_s922x_odroid_go_ultra"; // Yeah we will still use coreelec-dt-id, never re-invent the wheel huh?
+	amlogic-dt-id = "g12b_ogu";
 
-    // /delete-node/ memory@00000000; // Different from N2, we use that, since it's already 2G
+	// /delete-node/ memory@00000000; // Different from N2, we use that, since it's already 2G
 	/delete-node/ bt-dev; // No BT or Wi-Fi included
 	/delete-node/ wifi;
 	/delete-node/ wifi_pwm_conf;
 	/delete-node/ adc_keypad;
 	/delete-node/ unifykey;
 	// /delete-node/ rtc;
-    /delete-node/ videosync;
-    /delete-node/ dummy_venc;
-    /delete-node/ video_composer;
-    /delete-node/ meson_uvm;
-    /delete-node/ vcodec_dec;
-    /delete-node/ jpegenc;
-    /delete-node/ gpioleds;
-    /delete-node/ cvbsout;
-    /delete-node/ linux,picdec;
-    /delete-node/ picdec;
-    /delete-node/ multi-di;
+	/delete-node/ videosync;
+	/delete-node/ dummy_venc;
+	/delete-node/ video_composer;
+	/delete-node/ meson_uvm;
+	/delete-node/ vcodec_dec;
+	/delete-node/ jpegenc;
+	/delete-node/ gpioleds;
+	/delete-node/ cvbsout;
+	/delete-node/ linux,picdec;
+	/delete-node/ picdec;
+	/delete-node/ multi-di;
 
-    vout {
-        /delete-property/ fr_policy;
-    };
+	vout {
+		/delete-property/ fr_policy;
+	};
 
-    vout2 { // This is not a label, so it can't be simply disabled at the end
-        /delete-property/ fr_policy;
-        status = "disabled";
-    };
+	vout2 { // This is not a label, so it can't be simply disabled at the end
+		/delete-property/ fr_policy;
+		status = "disabled";
+	};
 
-    gpiomem {
+	gpiomem {
 		compatible = "amlogic, gpiomem";
 		reg = <0x0 0xff634000 0x0 0x1000>,	/* GPIO banks */
 			<0x0 0xff800000 0x0 0x1000>;	/* GPIO_AO bank */
@@ -51,12 +51,12 @@
 		#address-cells = <2>;
 		#size-cells = <2>;
 		ranges;
-        // /delete-node/ linux,ion-fb;
-        // /delete-node/ linux,vdin1_cma;
-        // /delete-node/ linux,galcore;
-        // /delete-node/ linux,isp_cma;
-        // /delete-node/ linux,adapt_cma;
-        // /delete-node/ linux,vdin0_cma;
+		// /delete-node/ linux,ion-fb;
+		// /delete-node/ linux,vdin1_cma;
+		// /delete-node/ linux,galcore;
+		// /delete-node/ linux,isp_cma;
+		// /delete-node/ linux,adapt_cma;
+		// /delete-node/ linux,vdin0_cma;
 
 		/* global autoconfigured region for contiguous allocations */
 		ramoops@0x07400000 {
@@ -65,7 +65,7 @@
 			record-size = <0x8000>;
 			console-size = <0x8000>;
 			ftrace-size = <0x40000>;
-            /delete-property/ pmsg-size;
+			/delete-property/ pmsg-size;
 		};
 
 		secmon_reserved:linux,secmon {
@@ -158,7 +158,7 @@
 		interrupts = <0 46 1
 				0 40 1>;
 		interrupt-names = "pre_irq", "post_irq";
-        clocks = <&clkc CLKID_VPU_CLKB_TMP_COMP>,
+		clocks = <&clkc CLKID_VPU_CLKB_TMP_COMP>,
 			<&clkc CLKID_VPU_CLKB_COMP>;
 		clock-names = "vpu_clkb_tmp_composite",
 			"vpu_clkb_composite";
@@ -193,12 +193,12 @@
 	efusekey:efusekey{
 		keynum = <1>;
 		key0 = <&key_0>;
-        /delete-property/ key1;
-        /delete-property/ key2;
-        /delete-property/ key3;
-        /delete-node/ key_1;
-        /delete-node/ key_2;
-        /delete-node/ key_3;
+		/delete-property/ key1;
+		/delete-property/ key2;
+		/delete-property/ key3;
+		/delete-node/ key_1;
+		/delete-node/ key_2;
+		/delete-node/ key_3;
 
 		key_0: key_0 {
 			keyname = "uuid";
@@ -259,17 +259,17 @@
 		aml-audio-card,effect = <&audio_effect>;
 		aml-audio-card,hp-det-gpio = <&gpio_ao GPIOAO_9 GPIO_ACTIVE_LOW>;
 
-        /delete-property/ avout_mute-gpios;
-        /delete-node/ aml-audio-card,dai-link@1;
-        /delete-node/ aml-audio-card,dai-link@2;
-        /delete-node/ aml-audio-card,dai-link@3;
+		/delete-property/ avout_mute-gpios;
+		/delete-node/ aml-audio-card,dai-link@1;
+		/delete-node/ aml-audio-card,dai-link@2;
+		/delete-node/ aml-audio-card,dai-link@3;
 		aml-audio-card,dai-link@0 {
 			format = "i2s";
 			mclk-fs = <256>;
 			bitclock-master = <&aml_tdmb>;
 			frame-master = <&aml_tdmb>;
 			continuous-clock;
-            /delete-property/ bitclock-master;
+			/delete-property/ bitclock-master;
 			/delete-property/ frame-master;
 
 			cpu {
@@ -446,208 +446,208 @@
 		};
 	};
 
-    soc {
-        ion_dev {
-            memory-region = <&ion_cma_reserved>;
-        };
-    };
+	soc {
+		ion_dev {
+			memory-region = <&ion_cma_reserved>;
+		};
+	};
 
-    remote:rc@0xff808040 {
-        compatible = "amlogic, aml_remote";
-        dev_name = "meson-remote";
-        reg = <0x0 0xff808040 0x00 0x44>,
-        <0x0 0xff808000 0x00 0x20>;
-        status = "okay";
-        protocol = <0x01>;
-        interrupts = <0 196 1>;
-        pinctrl-names = "default";
-        pinctrl-0 = <&remote_pins>;
-        map = <&custom_maps>;
-        max_frame_time = <200>;
-    };
+	remote:rc@0xff808040 {
+		compatible = "amlogic, aml_remote";
+		dev_name = "meson-remote";
+		reg = <0x0 0xff808040 0x00 0x44>,
+		<0x0 0xff808000 0x00 0x20>;
+		status = "okay";
+		protocol = <0x01>;
+		interrupts = <0 196 1>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&remote_pins>;
+		map = <&custom_maps>;
+		max_frame_time = <200>;
+	};
 
-    custom_maps:custom_maps {
-        mapnum = <3>;
-        map0 = <&map_0>;
-        map1 = <&map_1>;
-        map2 = <&map_2>;
-        map_0: map_0{
-            mapname = "amlogic-remote-1";
-            customcode = <0xfb04>;
-            release_delay = <80>;
-            size = <50>;
-            keymap = <((((0x47) & 0xFFFF)<<16) | ((11) & 0xFFFF))
-                ((((0x13) & 0xFFFF)<<16) | ((2) & 0xFFFF))
-                ((((0x10) & 0xFFFF)<<16) | ((3) & 0xFFFF))
-                ((((0x11) & 0xFFFF)<<16) | ((4) & 0xFFFF))
-                ((((0x0F) & 0xFFFF)<<16) | ((5) & 0xFFFF))
-                ((((0x0C) & 0xFFFF)<<16) | ((6) & 0xFFFF))
-                ((((0x0D) & 0xFFFF)<<16) | ((7) & 0xFFFF))
-                ((((0x0B) & 0xFFFF)<<16) | ((8) & 0xFFFF))
-                ((((0x08) & 0xFFFF)<<16) | ((9) & 0xFFFF))
-                ((((0x09) & 0xFFFF)<<16) | ((10) & 0xFFFF))
-                ((((0x5C) & 0xFFFF)<<16) | ((97) & 0xFFFF))
-                ((((0x51) & 0xFFFF)<<16) | ((61) & 0xFFFF))
-                ((((0x50) & 0xFFFF)<<16) | ((62) & 0xFFFF))
-                ((((0x40) & 0xFFFF)<<16) | ((63) & 0xFFFF))
-                ((((0x4d) & 0xFFFF)<<16) | ((64) & 0xFFFF))
-                ((((0x43) & 0xFFFF)<<16) | ((65) & 0xFFFF))
-                ((((0x17) & 0xFFFF)<<16) | ((66) & 0xFFFF))
-                ((((0x00) & 0xFFFF)<<16) | ((67) & 0xFFFF))
-                ((((0x01) & 0xFFFF)<<16) | ((68) & 0xFFFF))
-                ((((0x16) & 0xFFFF)<<16) | ((87) & 0xFFFF))
-                ((((0x49) & 0xFFFF)<<16) | ((14) & 0xFFFF))
-                ((((0x06) & 0xFFFF)<<16) | ((130) & 0xFFFF))
-                ((((0x14) & 0xFFFF)<<16) | ((131) & 0xFFFF))
-                ((((0x44) & 0xFFFF)<<16) | ((103) & 0xFFFF))
-                ((((0x1D) & 0xFFFF)<<16) | ((108) & 0xFFFF))
-                ((((0x1C) & 0xFFFF)<<16) | ((105) & 0xFFFF))
-                ((((0x48) & 0xFFFF)<<16) | ((106) & 0xFFFF))
-                ((((0x53) & 0xFFFF)<<16) | ((125) & 0xFFFF))
-                ((((0x45) & 0xFFFF)<<16) | ((104) & 0xFFFF))
-                ((((0x19) & 0xFFFF)<<16) | ((109) & 0xFFFF))
-                ((((0x52) & 0xFFFF)<<16) | ((119) & 0xFFFF))
-                ((((0x05) & 0xFFFF)<<16) | ((122) & 0xFFFF))
-                ((((0x59) & 0xFFFF)<<16) | ((123) & 0xFFFF))
-                ((((0x1b) & 0xFFFF)<<16) | ((120) & 0xFFFF))
-                ((((0x04) & 0xFFFF)<<16) | ((121) & 0xFFFF))
-                ((((0x1A) & 0xFFFF)<<16) | ((116) & 0xFFFF))
-                ((((0x0A) & 0xFFFF)<<16) | ((15) & 0xFFFF))
-                ((((0x0e) & 0xFFFF)<<16) | ((113) & 0xFFFF))
-                ((((0x1F) & 0xFFFF)<<16) | ((102) & 0xFFFF))
-                ((((0x1e) & 0xFFFF)<<16) | ((132) & 0xFFFF))
-                ((((0x07) & 0xFFFF)<<16) | ((133) & 0xFFFF))
-                ((((0x12) & 0xFFFF)<<16) | ((134) & 0xFFFF))
-                ((((0x54) & 0xFFFF)<<16) | ((135) & 0xFFFF))
-                ((((0x02) & 0xFFFF)<<16) | ((136) & 0xFFFF))
-                ((((0x4f) & 0xFFFF)<<16) | ((30) & 0xFFFF))
-                ((((0x42) & 0xFFFF)<<16) | ((48) & 0xFFFF))
-                ((((0x5d) & 0xFFFF)<<16) | ((46) & 0xFFFF))
-                ((((0x4c) & 0xFFFF)<<16) | ((32) & 0xFFFF))
-                ((((0x58) & 0xFFFF)<<16) | ((137) & 0xFFFF))
-                ((((0x55) & 0xFFFF)<<16) | ((140) & 0xFFFF))>;
-        };
-        map_1: map_1{
-            mapname = "amlogic-remote-2";
-            customcode = <0xfe01>;
-            release_delay = <80>;
-            size = <53>;
-            keymap = <((((0x01) & 0xFFFF)<<16) | ((2) & 0xFFFF))
-                ((((0x02) & 0xFFFF)<<16) | ((3) & 0xFFFF))
-                ((((0x03) & 0xFFFF)<<16) | ((4) & 0xFFFF))
-                ((((0x04) & 0xFFFF)<<16) | ((5) & 0xFFFF))
-                ((((0x05) & 0xFFFF)<<16) | ((6) & 0xFFFF))
-                ((((0x06) & 0xFFFF)<<16) | ((7) & 0xFFFF))
-                ((((0x07) & 0xFFFF)<<16) | ((8) & 0xFFFF))
-                ((((0x08) & 0xFFFF)<<16) | ((9) & 0xFFFF))
-                ((((0x09) & 0xFFFF)<<16) | ((10) & 0xFFFF))
-                ((((0x0a) & 0xFFFF)<<16) | ((11) & 0xFFFF))
-                ((((0x1F) & 0xFFFF)<<16) | ((0x1d2) & 0xFFFF))
-                ((((0x15) & 0xFFFF)<<16) | ((139) & 0xFFFF))
-                ((((0x16) & 0xFFFF)<<16) | ((15) & 0xFFFF))
-                ((((0x0c) & 0xFFFF)<<16) | ((0x192) & 0xFFFF))
-                ((((0x0d) & 0xFFFF)<<16) | ((0x193) & 0xFFFF))
-                ((((0x0e) & 0xFFFF)<<16) | ((115) & 0xFFFF))
-                ((((0x0f) & 0xFFFF)<<16) | ((114) & 0xFFFF))
-                ((((0x11) & 0xFFFF)<<16) | ((102) & 0xFFFF))
-                ((((0x1c) & 0xFFFF)<<16) | ((106) & 0xFFFF))
-                ((((0x1b) & 0xFFFF)<<16) | ((105) & 0xFFFF))
-                ((((0x19) & 0xFFFF)<<16) | ((103) & 0xFFFF))
-                ((((0x1a) & 0xFFFF)<<16) | ((108) & 0xFFFF))
-                ((((0x1d) & 0xFFFF)<<16) | ((28) & 0xFFFF))
-                ((((0x17) & 0xFFFF)<<16) | ((113) & 0xFFFF))
-                ((((0x49) & 0xFFFF)<<16) | ((219) & 0xFFFF))
-                ((((0x43) & 0xFFFF)<<16) | ((158) & 0xFFFF))
-                ((((0x12) & 0xFFFF)<<16) | ((0x1d5) & 0xFFFF))
-                ((((0x14) & 0xFFFF)<<16) | ((0x1d6) & 0xFFFF))
-                ((((0x18) & 0xFFFF)<<16) | ((0x1d7) & 0xFFFF))
-                ((((0x59) & 0xFFFF)<<16) | ((0x166) & 0xFFFF))
-                ((((0x5a) & 0xFFFF)<<16) | ((166) & 0xFFFF))
-                ((((0x10) & 0xFFFF)<<16) | ((116) & 0xFFFF))
-                ((((0x42) & 0xFFFF)<<16) | ((165) & 0xFFFF))
-                ((((0x44) & 0xFFFF)<<16) | ((163) & 0xFFFF))
-                ((((0x1e) & 0xFFFF)<<16) | ((168) & 0xFFFF))
-                ((((0x4b) & 0xFFFF)<<16) | ((208) & 0xFFFF))
-                ((((0x58) & 0xFFFF)<<16) | ((164) & 0xFFFF))
-                ((((0x46) & 0xFFFF)<<16) | ((130) & 0xFFFF))
-                ((((0x40) & 0xFFFF)<<16) | ((131) & 0xFFFF))
-                ((((0x38) & 0xFFFF)<<16) | ((70) & 0xFFFF))
-                ((((0x57) & 0xFFFF)<<16) | ((0x1d0) & 0xFFFF))
-                ((((0x5b) & 0xFFFF)<<16) | ((0x1d1) & 0xFFFF))
-                ((((0x54) & 0xFFFF)<<16) | ((0x18e) & 0xFFFF))
-                ((((0x4c) & 0xFFFF)<<16) | ((0x18f) & 0xFFFF))
-                ((((0x4e) & 0xFFFF)<<16) | ((0x190) & 0xFFFF))
-                ((((0x55) & 0xFFFF)<<16) | ((0x191) & 0xFFFF))
-                ((((0x53) & 0xFFFF)<<16) | ((237) & 0xFFFF))
-                ((((0x52) & 0xFFFF)<<16) | ((238) & 0xFFFF))
-                ((((0x39) & 0xFFFF)<<16) | ((212) & 0xFFFF))
-                ((((0x41) & 0xFFFF)<<16) | ((213) & 0xFFFF))
-                ((((0x0b) & 0xFFFF)<<16) | ((214) & 0xFFFF))
-                ((((0x00) & 0xFFFF)<<16) | ((216) & 0xFFFF))
-                ((((0x13) & 0xFFFF)<<16) | ((217) & 0xFFFF))>;
-        };
-        map_2: map_2{
-            mapname = "amlogic-remote-3";
-            customcode = <0xbd02>;
-            release_delay = <80>;
-            size = <17>;
-            keymap = <((((0xca) & 0xFFFF)<<16) | ((103) & 0xFFFF))
-            ((((0xd2) & 0xFFFF)<<16) | ((108) & 0xFFFF))
-            ((((0x99) & 0xFFFF)<<16) | ((105) & 0xFFFF))
-            ((((0xc1) & 0xFFFF)<<16) | ((106) & 0xFFFF))
-            ((((0xce) & 0xFFFF)<<16) | ((97) & 0xFFFF))
-            ((((0x45) & 0xFFFF)<<16) | ((116) & 0xFFFF))
-            ((((0xc5) & 0xFFFF)<<16) | ((133) & 0xFFFF))
-            ((((0x80) & 0xFFFF)<<16) | ((113) & 0xFFFF))
-            ((((0xd0) & 0xFFFF)<<16) | ((15) & 0xFFFF))
-            ((((0xd6) & 0xFFFF)<<16) | ((125) & 0xFFFF))
-            ((((0x95) & 0xFFFF)<<16) | ((102) & 0xFFFF))
-            ((((0xdd) & 0xFFFF)<<16) | ((104) & 0xFFFF))
-            ((((0x8c) & 0xFFFF)<<16) | ((109) & 0xFFFF))
-            ((((0x89) & 0xFFFF)<<16) | ((131) & 0xFFFF))
-            ((((0x9c) & 0xFFFF)<<16) | ((130) & 0xFFFF))
-            ((((0x9a) & 0xFFFF)<<16) | ((120) & 0xFFFF))
-            ((((0xcd) & 0xFFFF)<<16) | ((121) & 0xFFFF))>;
-        };
-    };
+	custom_maps:custom_maps {
+		mapnum = <3>;
+		map0 = <&map_0>;
+		map1 = <&map_1>;
+		map2 = <&map_2>;
+		map_0: map_0{
+			mapname = "amlogic-remote-1";
+			customcode = <0xfb04>;
+			release_delay = <80>;
+			size = <50>;
+			keymap = <((((0x47) & 0xFFFF)<<16) | ((11) & 0xFFFF))
+				((((0x13) & 0xFFFF)<<16) | ((2) & 0xFFFF))
+				((((0x10) & 0xFFFF)<<16) | ((3) & 0xFFFF))
+				((((0x11) & 0xFFFF)<<16) | ((4) & 0xFFFF))
+				((((0x0F) & 0xFFFF)<<16) | ((5) & 0xFFFF))
+				((((0x0C) & 0xFFFF)<<16) | ((6) & 0xFFFF))
+				((((0x0D) & 0xFFFF)<<16) | ((7) & 0xFFFF))
+				((((0x0B) & 0xFFFF)<<16) | ((8) & 0xFFFF))
+				((((0x08) & 0xFFFF)<<16) | ((9) & 0xFFFF))
+				((((0x09) & 0xFFFF)<<16) | ((10) & 0xFFFF))
+				((((0x5C) & 0xFFFF)<<16) | ((97) & 0xFFFF))
+				((((0x51) & 0xFFFF)<<16) | ((61) & 0xFFFF))
+				((((0x50) & 0xFFFF)<<16) | ((62) & 0xFFFF))
+				((((0x40) & 0xFFFF)<<16) | ((63) & 0xFFFF))
+				((((0x4d) & 0xFFFF)<<16) | ((64) & 0xFFFF))
+				((((0x43) & 0xFFFF)<<16) | ((65) & 0xFFFF))
+				((((0x17) & 0xFFFF)<<16) | ((66) & 0xFFFF))
+				((((0x00) & 0xFFFF)<<16) | ((67) & 0xFFFF))
+				((((0x01) & 0xFFFF)<<16) | ((68) & 0xFFFF))
+				((((0x16) & 0xFFFF)<<16) | ((87) & 0xFFFF))
+				((((0x49) & 0xFFFF)<<16) | ((14) & 0xFFFF))
+				((((0x06) & 0xFFFF)<<16) | ((130) & 0xFFFF))
+				((((0x14) & 0xFFFF)<<16) | ((131) & 0xFFFF))
+				((((0x44) & 0xFFFF)<<16) | ((103) & 0xFFFF))
+				((((0x1D) & 0xFFFF)<<16) | ((108) & 0xFFFF))
+				((((0x1C) & 0xFFFF)<<16) | ((105) & 0xFFFF))
+				((((0x48) & 0xFFFF)<<16) | ((106) & 0xFFFF))
+				((((0x53) & 0xFFFF)<<16) | ((125) & 0xFFFF))
+				((((0x45) & 0xFFFF)<<16) | ((104) & 0xFFFF))
+				((((0x19) & 0xFFFF)<<16) | ((109) & 0xFFFF))
+				((((0x52) & 0xFFFF)<<16) | ((119) & 0xFFFF))
+				((((0x05) & 0xFFFF)<<16) | ((122) & 0xFFFF))
+				((((0x59) & 0xFFFF)<<16) | ((123) & 0xFFFF))
+				((((0x1b) & 0xFFFF)<<16) | ((120) & 0xFFFF))
+				((((0x04) & 0xFFFF)<<16) | ((121) & 0xFFFF))
+				((((0x1A) & 0xFFFF)<<16) | ((116) & 0xFFFF))
+				((((0x0A) & 0xFFFF)<<16) | ((15) & 0xFFFF))
+				((((0x0e) & 0xFFFF)<<16) | ((113) & 0xFFFF))
+				((((0x1F) & 0xFFFF)<<16) | ((102) & 0xFFFF))
+				((((0x1e) & 0xFFFF)<<16) | ((132) & 0xFFFF))
+				((((0x07) & 0xFFFF)<<16) | ((133) & 0xFFFF))
+				((((0x12) & 0xFFFF)<<16) | ((134) & 0xFFFF))
+				((((0x54) & 0xFFFF)<<16) | ((135) & 0xFFFF))
+				((((0x02) & 0xFFFF)<<16) | ((136) & 0xFFFF))
+				((((0x4f) & 0xFFFF)<<16) | ((30) & 0xFFFF))
+				((((0x42) & 0xFFFF)<<16) | ((48) & 0xFFFF))
+				((((0x5d) & 0xFFFF)<<16) | ((46) & 0xFFFF))
+				((((0x4c) & 0xFFFF)<<16) | ((32) & 0xFFFF))
+				((((0x58) & 0xFFFF)<<16) | ((137) & 0xFFFF))
+				((((0x55) & 0xFFFF)<<16) | ((140) & 0xFFFF))>;
+		};
+		map_1: map_1{
+			mapname = "amlogic-remote-2";
+			customcode = <0xfe01>;
+			release_delay = <80>;
+			size = <53>;
+			keymap = <((((0x01) & 0xFFFF)<<16) | ((2) & 0xFFFF))
+				((((0x02) & 0xFFFF)<<16) | ((3) & 0xFFFF))
+				((((0x03) & 0xFFFF)<<16) | ((4) & 0xFFFF))
+				((((0x04) & 0xFFFF)<<16) | ((5) & 0xFFFF))
+				((((0x05) & 0xFFFF)<<16) | ((6) & 0xFFFF))
+				((((0x06) & 0xFFFF)<<16) | ((7) & 0xFFFF))
+				((((0x07) & 0xFFFF)<<16) | ((8) & 0xFFFF))
+				((((0x08) & 0xFFFF)<<16) | ((9) & 0xFFFF))
+				((((0x09) & 0xFFFF)<<16) | ((10) & 0xFFFF))
+				((((0x0a) & 0xFFFF)<<16) | ((11) & 0xFFFF))
+				((((0x1F) & 0xFFFF)<<16) | ((0x1d2) & 0xFFFF))
+				((((0x15) & 0xFFFF)<<16) | ((139) & 0xFFFF))
+				((((0x16) & 0xFFFF)<<16) | ((15) & 0xFFFF))
+				((((0x0c) & 0xFFFF)<<16) | ((0x192) & 0xFFFF))
+				((((0x0d) & 0xFFFF)<<16) | ((0x193) & 0xFFFF))
+				((((0x0e) & 0xFFFF)<<16) | ((115) & 0xFFFF))
+				((((0x0f) & 0xFFFF)<<16) | ((114) & 0xFFFF))
+				((((0x11) & 0xFFFF)<<16) | ((102) & 0xFFFF))
+				((((0x1c) & 0xFFFF)<<16) | ((106) & 0xFFFF))
+				((((0x1b) & 0xFFFF)<<16) | ((105) & 0xFFFF))
+				((((0x19) & 0xFFFF)<<16) | ((103) & 0xFFFF))
+				((((0x1a) & 0xFFFF)<<16) | ((108) & 0xFFFF))
+				((((0x1d) & 0xFFFF)<<16) | ((28) & 0xFFFF))
+				((((0x17) & 0xFFFF)<<16) | ((113) & 0xFFFF))
+				((((0x49) & 0xFFFF)<<16) | ((219) & 0xFFFF))
+				((((0x43) & 0xFFFF)<<16) | ((158) & 0xFFFF))
+				((((0x12) & 0xFFFF)<<16) | ((0x1d5) & 0xFFFF))
+				((((0x14) & 0xFFFF)<<16) | ((0x1d6) & 0xFFFF))
+				((((0x18) & 0xFFFF)<<16) | ((0x1d7) & 0xFFFF))
+				((((0x59) & 0xFFFF)<<16) | ((0x166) & 0xFFFF))
+				((((0x5a) & 0xFFFF)<<16) | ((166) & 0xFFFF))
+				((((0x10) & 0xFFFF)<<16) | ((116) & 0xFFFF))
+				((((0x42) & 0xFFFF)<<16) | ((165) & 0xFFFF))
+				((((0x44) & 0xFFFF)<<16) | ((163) & 0xFFFF))
+				((((0x1e) & 0xFFFF)<<16) | ((168) & 0xFFFF))
+				((((0x4b) & 0xFFFF)<<16) | ((208) & 0xFFFF))
+				((((0x58) & 0xFFFF)<<16) | ((164) & 0xFFFF))
+				((((0x46) & 0xFFFF)<<16) | ((130) & 0xFFFF))
+				((((0x40) & 0xFFFF)<<16) | ((131) & 0xFFFF))
+				((((0x38) & 0xFFFF)<<16) | ((70) & 0xFFFF))
+				((((0x57) & 0xFFFF)<<16) | ((0x1d0) & 0xFFFF))
+				((((0x5b) & 0xFFFF)<<16) | ((0x1d1) & 0xFFFF))
+				((((0x54) & 0xFFFF)<<16) | ((0x18e) & 0xFFFF))
+				((((0x4c) & 0xFFFF)<<16) | ((0x18f) & 0xFFFF))
+				((((0x4e) & 0xFFFF)<<16) | ((0x190) & 0xFFFF))
+				((((0x55) & 0xFFFF)<<16) | ((0x191) & 0xFFFF))
+				((((0x53) & 0xFFFF)<<16) | ((237) & 0xFFFF))
+				((((0x52) & 0xFFFF)<<16) | ((238) & 0xFFFF))
+				((((0x39) & 0xFFFF)<<16) | ((212) & 0xFFFF))
+				((((0x41) & 0xFFFF)<<16) | ((213) & 0xFFFF))
+				((((0x0b) & 0xFFFF)<<16) | ((214) & 0xFFFF))
+				((((0x00) & 0xFFFF)<<16) | ((216) & 0xFFFF))
+				((((0x13) & 0xFFFF)<<16) | ((217) & 0xFFFF))>;
+		};
+		map_2: map_2{
+			mapname = "amlogic-remote-3";
+			customcode = <0xbd02>;
+			release_delay = <80>;
+			size = <17>;
+			keymap = <((((0xca) & 0xFFFF)<<16) | ((103) & 0xFFFF))
+			((((0xd2) & 0xFFFF)<<16) | ((108) & 0xFFFF))
+			((((0x99) & 0xFFFF)<<16) | ((105) & 0xFFFF))
+			((((0xc1) & 0xFFFF)<<16) | ((106) & 0xFFFF))
+			((((0xce) & 0xFFFF)<<16) | ((97) & 0xFFFF))
+			((((0x45) & 0xFFFF)<<16) | ((116) & 0xFFFF))
+			((((0xc5) & 0xFFFF)<<16) | ((133) & 0xFFFF))
+			((((0x80) & 0xFFFF)<<16) | ((113) & 0xFFFF))
+			((((0xd0) & 0xFFFF)<<16) | ((15) & 0xFFFF))
+			((((0xd6) & 0xFFFF)<<16) | ((125) & 0xFFFF))
+			((((0x95) & 0xFFFF)<<16) | ((102) & 0xFFFF))
+			((((0xdd) & 0xFFFF)<<16) | ((104) & 0xFFFF))
+			((((0x8c) & 0xFFFF)<<16) | ((109) & 0xFFFF))
+			((((0x89) & 0xFFFF)<<16) | ((131) & 0xFFFF))
+			((((0x9c) & 0xFFFF)<<16) | ((130) & 0xFFFF))
+			((((0x9a) & 0xFFFF)<<16) | ((120) & 0xFFFF))
+			((((0xcd) & 0xFFFF)<<16) | ((121) & 0xFFFF))>;
+		};
+	};
 
-    galcore {
-        status = "disabled";
-        /delete-property/ memory-region;
-    };
+	galcore {
+		status = "disabled";
+		/delete-property/ memory-region;
+	};
 
-    nand: nfc@0 {
-        compatible = "amlogic, aml_mtd_nand";
-        dev_name = "mtdnand";
-        status = "disabled";
-        reg = <0x0 0xFFE07800 0x0 0x200>;
-        interrupts = <0 34 1>;
-        pinctrl-names = "nand_rb_mod","nand_norb_mod", "nand_cs_only";
-        pinctrl-0 = <&all_nand_pins>;
-        pinctrl-1 = <&all_nand_pins>;
-        pinctrl-2 = <&nand_cs_pins>;
-        clock-names = "core", "clkin";
-        device_id = <0>;
-        bl_mode = <1>;
-        fip_copies = <4>;
-        fip_size = <0x200000>;
-        nand_clk_ctrl = <0xFFE07000>;
-    };
+	nand: nfc@0 {
+		compatible = "amlogic, aml_mtd_nand";
+		dev_name = "mtdnand";
+		status = "disabled";
+		reg = <0x0 0xFFE07800 0x0 0x200>;
+		interrupts = <0 34 1>;
+		pinctrl-names = "nand_rb_mod","nand_norb_mod", "nand_cs_only";
+		pinctrl-0 = <&all_nand_pins>;
+		pinctrl-1 = <&all_nand_pins>;
+		pinctrl-2 = <&nand_cs_pins>;
+		clock-names = "core", "clkin";
+		device_id = <0>;
+		bl_mode = <1>;
+		fip_copies = <4>;
+		fip_size = <0x200000>;
+		nand_clk_ctrl = <0xFFE07000>;
+	};
 
-    ddr_bandwidth {
-        /delete-property/ sec_base;
-    };
+	ddr_bandwidth {
+		/delete-property/ sec_base;
+	};
 }; /* end of / */
 
 &meson_fb {
 	status = "okay";
-    display_mode_default = "panel";
+	display_mode_default = "panel";
 	display_size_default = <480 854 480 1708 32>;
 	mem_size = <0x00800000 0x4b80000 0x100000 0x100000 0x800000>;
 	logo_addr = "0x3d800000";
 	mem_alloc = <1>;
 	pxp_mode = <0>; /** 0:normal mode 1:pxp mode */
-    4k2k_fb = <0>;
+	4k2k_fb = <0>;
 };
 
 &pwm_ab {
@@ -660,8 +660,8 @@
 
 &audiobus {
 	/* tdmb to internal DAC output*/
-    /delete-node/ loopback@0;
-    /delete-node/ i2s2hdmi;
+	/delete-node/ loopback@0;
+	/delete-node/ i2s2hdmi;
 	aml_tdmb: tdmb {
 		compatible = "amlogic, g12a-snd-tdmb";
 		#sound-dai-cells = <0>;
@@ -676,7 +676,7 @@
 		mclk_pad = <0>;  /* 0: mclk_0; 1: mclk_1 */
 		i2s2hdmi = <0>;
 
-        /delete-property/ samesource_sel;
+		/delete-property/ samesource_sel;
 	};
 	aml_spdif: spdif {
 		compatible = "amlogic, g12a-snd-spdif-a";
@@ -695,7 +695,7 @@
 		interrupt-names = "irq_spdifin";
 		status = "disabled";
 
-        /delete-property/ pinctrl-names;
+		/delete-property/ pinctrl-names;
 	};
 	aml_spdif_b: spdif_b {
 		compatible = "amlogic, g12a-snd-spdif-b";
@@ -826,29 +826,29 @@
 		};
 	};
 
-    spifc_all_pins: spifc_all_pins {
-        mux {
-            groups = "nor_d",
-                "nor_q",
-                "nor_c";
-            function = "nor";
-            input-enable;
-            bias-pull-up;
-        };
-    };
+	spifc_all_pins: spifc_all_pins {
+		mux {
+			groups = "nor_d",
+				"nor_q",
+				"nor_c";
+			function = "nor";
+			input-enable;
+			bias-pull-up;
+		};
+	};
 }; /* end of pinctrl_periphs */
 
 &a_uart_pins {
-    mux {
-        groups = "uart_tx_a",
-            "uart_rx_a",
-            "uart_rts_a";
-    };
-    mux1 {
-        groups = "uart_cts_a";
-        function = "uart_a";
-        bias-pull-down;
-    };
+	mux {
+		groups = "uart_tx_a",
+			"uart_rx_a",
+			"uart_rts_a";
+	};
+	mux1 {
+		groups = "uart_cts_a";
+		function = "uart_a";
+		bias-pull-down;
+	};
 };
 
 &audio_data {
@@ -862,7 +862,7 @@
 	vmmc-supply = <&vcc_sd>;
 	vqmmc-supply = <&vddio_ao1v8>;
 	emmc {
-        // /delete-property/ save_para;
+		// /delete-property/ save_para;
 		// /delete-property/ compute_cmd_delay;
 		// /delete-property/ compute_coef;
 		caps = "MMC_CAP_8_BIT_DATA",
@@ -899,21 +899,21 @@
 	// 		 "MMC_CAP_CMD23";
 	// 	f_min = <400000>;
 	// 	f_max = <200000000>;
-    //     jtag_pin = <&gpio 42 0>;
+	//	 jtag_pin = <&gpio 42 0>;
 	// };
 };
 
 &sd_emmc_a {
-    status = "disabled";
-    sdio {
-        /delete-property/ caps;
-        /delete-property/ f_min;
-        /delete-property/ f_max;
-    };
+	status = "disabled";
+	sdio {
+		/delete-property/ caps;
+		/delete-property/ f_min;
+		/delete-property/ f_max;
+	};
 };
 
 &gpu {
-    min_clk = <4>;
+	min_clk = <4>;
 };
 
 &dvfs285_cfg {
@@ -933,40 +933,40 @@
 };
 
 &ethmac {
-    status = "disabled";
-    /delete-property/ mc_val;
-    /delete-property/ internal_phy;
+	status = "disabled";
+	/delete-property/ mc_val;
+	/delete-property/ internal_phy;
 	/delete-property/ pinctrl-names;
 	/delete-property/ pinctrl-0;
 };
 
 &external_eth_pins {
-    mux {
-        groups = "eth_mdio",
-        "eth_mdc",
-        "eth_rgmii_rx_clk",
-        "eth_rx_dv",
-        "eth_rxd0",
-        "eth_rxd1",
-        "eth_rxd2_rgmii",
-        "eth_rxd3_rgmii",
-        "eth_rgmii_tx_clk",
-        "eth_txen",
-        "eth_txd0",
-        "eth_txd1",
-        "eth_txd2_rgmii",
-        "eth_txd3_rgmii";
-    };
+	mux {
+		groups = "eth_mdio",
+		"eth_mdc",
+		"eth_rgmii_rx_clk",
+		"eth_rx_dv",
+		"eth_rxd0",
+		"eth_rxd1",
+		"eth_rxd2_rgmii",
+		"eth_rxd3_rgmii",
+		"eth_rgmii_tx_clk",
+		"eth_txen",
+		"eth_txd0",
+		"eth_txd1",
+		"eth_txd2_rgmii",
+		"eth_txd3_rgmii";
+	};
 };
 
 &pinctrl_aobus {
-    /delete-node/ spdifout;
-    /delete-node/ spdifout_a_mute;
+	/delete-node/ spdifout;
+	/delete-node/ spdifout_a_mute;
 };
 
 &aml_spdif {
-    /delete-property/ pinctrl-0;
-    /delete-property/ pinctrl-1;
+	/delete-property/ pinctrl-0;
+	/delete-property/ pinctrl-1;
 };
 
 &usb2_phy_v2 {
@@ -987,17 +987,17 @@
 &pcie_A {
 	reset-gpio = <&gpio GPIOX_7 GPIO_ACTIVE_HIGH>;
 	status = "disabled";
-    clock-names = "pcie_refpll",
-                "pcie",
-                "pcie_phy";
+	clock-names = "pcie_refpll",
+				"pcie",
+				"pcie_phy";
 };
 
 &usb3_phy_v2 {
 	status = "okay";
 	portnum = <1>;
 	otg = <1>;
-    /delete-property/ gpio-vbus-power;
-    /delete-property/ gpios;
+	/delete-property/ gpio-vbus-power;
+	/delete-property/ gpios;
 };
 
 &saradc {
@@ -1018,8 +1018,8 @@
 
 &isp {
 	status = "disabled";
-    temper-buf-size = <24>;
-    /delete-property/ temper-line-offset;
+	temper-buf-size = <24>;
+	/delete-property/ temper-line-offset;
 	/delete-property/ temper-frame-num;
 	/delete-property/ temper-frame-size;
 	/delete-property/ memory-region;
@@ -1027,100 +1027,100 @@
 
 &adapter {
 	status = "disabled";
-    mem_alloc = <48>;
-    /delete-property/ memory-region;
+	mem_alloc = <48>;
+	/delete-property/ memory-region;
 };
 
 &amhdmitx {
 	status = "disabled";
-    interrupts = <0 57 1>;
-    interrupt-names = "hdmitx_hpd";
+	interrupts = <0 57 1>;
+	interrupt-names = "hdmitx_hpd";
 };
 
 &aocec {
 	status = "disabled";
-    compatible = "amlogic, aocec-g12a";
-    ee_cec;
-    arc_port_mask = <0x02>;
-    /delete-property/ output;
+	compatible = "amlogic, aocec-g12a";
+	ee_cec;
+	arc_port_mask = <0x02>;
+	/delete-property/ output;
 };
 
 &cbus {
-    spifc: spifc@14000 {
-        status = "disabled";
-        compatible = "amlogic,aml-spi-nor";
-        reg = <0x0 0x14000 0x0 0x80>;
-        pinctrl-names = "default";
-        pinctrl-0 = <&spifc_all_pins>;
-        clocks = <&clkc 11>;
-        clock-names = "core";
+	spifc: spifc@14000 {
+		status = "disabled";
+		compatible = "amlogic,aml-spi-nor";
+		reg = <0x0 0x14000 0x0 0x80>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&spifc_all_pins>;
+		clocks = <&clkc 11>;
+		clock-names = "core";
    };
 };
 
 &uart_A {
-    status = "disabled";
+	status = "disabled";
 };
 
 &vdin0 {
-    /delete-property/ cma_size;
-    /delete-property/ tv_bit_mode;
+	/delete-property/ cma_size;
+	/delete-property/ tv_bit_mode;
 };
 
 &vdin1 {
-    /delete-property/ memory-region;
-    /delete-property/ tv_bit_mode;
+	/delete-property/ memory-region;
+	/delete-property/ tv_bit_mode;
 };
 
 &meson_cooldev {
-    cooling_devices {
-        cpufreq_cool_cluster0 {
-            gpu_pp = <2>;
-        };
-        cpufreq_cool_cluster1 {
-            gpu_pp = <2>;
-        };
-        cpucore_cool_cluster {
-            dyn_coeff = <0>;
-            gpu_pp = <2>;
-        };
-        gpufreq_cool {
-            cluster_id = <0>;
-        };
-        gpucore_cool {
-            dyn_coeff = <0>;
-            cluster_id = <0>;
-            gpu_pp = <2>;
-        };
-    };
+	cooling_devices {
+		cpufreq_cool_cluster0 {
+			gpu_pp = <2>;
+		};
+		cpufreq_cool_cluster1 {
+			gpu_pp = <2>;
+		};
+		cpucore_cool_cluster {
+			dyn_coeff = <0>;
+			gpu_pp = <2>;
+		};
+		gpufreq_cool {
+			cluster_id = <0>;
+		};
+		gpucore_cool {
+			dyn_coeff = <0>;
+			cluster_id = <0>;
+			gpu_pp = <2>;
+		};
+	};
 };
 
 &pswitch_on {
-    temperature = <65000>;
+	temperature = <65000>;
 };
 
 &phot {
-    temperature = <95000>;
+	temperature = <95000>;
 };
 
 &soc_thermal {
-    cooling-maps {
-        /delete-node/ cpucore_cooling_map0;
-        cpufreq_cooling_map0 {
-            cooling-device = <&cpufreq_cool0 0 10>;
-        };
-        cpufreq_cooling_map1 {
-            cooling-device = <&cpufreq_cool1 0 9>;
-        };
-        cpucore_cooling_map {
-            trip = <&pcontrol>;
-            cooling-device = <&cpucore_cool 0 5>;
-            contribution = <1024>;
-        };
-        gpufreq_cooling_map {
-            cooling-device = <&gpufreq_cool0 0 4>;
-        };
-        gpucore_cooling_map {
-            cooling-device = <&gpucore_cool0 0 2>;
-        };
-    };
+	cooling-maps {
+		/delete-node/ cpucore_cooling_map0;
+		cpufreq_cooling_map0 {
+			cooling-device = <&cpufreq_cool0 0 10>;
+		};
+		cpufreq_cooling_map1 {
+			cooling-device = <&cpufreq_cool1 0 9>;
+		};
+		cpucore_cooling_map {
+			trip = <&pcontrol>;
+			cooling-device = <&cpucore_cool 0 5>;
+			contribution = <1024>;
+		};
+		gpufreq_cooling_map {
+			cooling-device = <&gpufreq_cool0 0 4>;
+		};
+		gpucore_cooling_map {
+			cooling-device = <&gpucore_cool0 0 2>;
+		};
+	};
 };
