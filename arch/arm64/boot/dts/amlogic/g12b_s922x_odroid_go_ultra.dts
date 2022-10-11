@@ -641,11 +641,13 @@
 
 &meson_fb {
 	status = "okay";
+    display_mode_default = "panel";
 	display_size_default = <480 854 480 1708 32>;
 	mem_size = <0x00800000 0x4b80000 0x100000 0x100000 0x800000>;
 	logo_addr = "0x3d800000";
 	mem_alloc = <1>;
 	pxp_mode = <0>; /** 0:normal mode 1:pxp mode */
+    4k2k_fb = <0>;
 };
 
 &pwm_ab {
