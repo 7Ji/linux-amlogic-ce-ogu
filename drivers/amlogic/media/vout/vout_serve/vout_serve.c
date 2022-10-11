@@ -658,12 +658,12 @@ static ssize_t vout_vinfo_name_show(struct class *class,
 		struct class_attribute *attr, char *buf)
 {
 	const struct vinfo_s *info = NULL;
-	int ret = 0;
+	// int ret = 0;
 
 	info = get_current_vinfo();
 	if (info == NULL)
 		return sprintf(buf, "null");
-	ret = sprintf(buf, "%s\n", info->name);
+	return sprintf(buf, "%s\n", info->name);
 }
 
 static struct class_attribute vout_class_attrs[] = {
