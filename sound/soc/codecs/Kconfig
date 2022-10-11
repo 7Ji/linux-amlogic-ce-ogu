@@ -650,7 +650,7 @@ config SND_SOC_RK817
 	tristate "Rockchip RK817 CODEC"
 	depends on MFD_RK808
 	select REGMAP_I2C
-    
+	
 config SND_SOC_RL6231
 	tristate
 	default y if SND_SOC_RT5514=y

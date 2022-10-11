@@ -255,7 +255,7 @@ config PINCTRL_ZYNQ
 	select GENERIC_PINCONF
 	help
 	  This selects the pinctrl driver for Xilinx Zynq.
-      
+	  
 config PINCTRL_RK805
 	tristate "Pinctrl and GPIO driver for RK805 PMIC"
 	depends on MFD_RK808

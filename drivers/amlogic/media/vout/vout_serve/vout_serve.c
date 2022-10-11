@@ -315,10 +315,10 @@ static int set_vout_init_mode(void)
 	vout_init_vmode = validate_vmode(local_name, frac);
 	if (vout_init_vmode >= VMODE_MAX) {
 #ifdef CONFIG_AMLOGIC_LCD
-        VOUTERR("no matched vout_init mode %s, force to panel\n",
+		VOUTERR("no matched vout_init mode %s, force to panel\n",
 			vout_mode_uboot);
-        snprintf(local_name, VMODE_NAME_LEN_MAX, "%s", "panel");
-        vout_init_vmode = validate_vmode("panel", frac);
+		snprintf(local_name, VMODE_NAME_LEN_MAX, "%s", "panel");
+		vout_init_vmode = validate_vmode("panel", frac);
 #else
 		VOUTERR("no matched vout_init mode %s, force to invalid\n",
 			vout_mode_uboot);

@@ -4599,28 +4599,28 @@ static int osd_probe(struct platform_device *pdev)
 			if (ret)
 				osd_log_info("not found display_size_default\n");
 			else {
-                // if (emuelec_is_ogu) {
-                //     osd_log_info("OGU logic, force OSD 480 854 480 1708 32");
-                //     fb_def_var[index].xres = 480;
-                //     fb_def_var[index].yres = 854;
-                //     fb_def_var[index].xres_virtual = 480;
-                //     fb_def_var[index].yres_virtual = 1708;
-                //     fb_def_var[index].bits_per_pixel = 32;
-                // } else {
-                    osd_log_info("Using vinfo %u %u %u %u %u as fbdef\n", var_screeninfo[0], var_screeninfo[1], var_screeninfo[2], var_screeninfo[3], var_screeninfo[4]);
-                    fb_def_var[index].xres = var_screeninfo[0];
-                    fb_def_var[index].yres = var_screeninfo[1];
-                    fb_def_var[index].xres_virtual =
-                        var_screeninfo[2];
-                    fb_def_var[index].yres_virtual =
-                        var_screeninfo[3];
-                    fb_def_var[index].bits_per_pixel =
-                        var_screeninfo[4];
-                    osd_log_info("init fbdev bpp is:%d\n",
-                        fb_def_var[index].bits_per_pixel);
-                    if (fb_def_var[index].bits_per_pixel > 32)
-                        fb_def_var[index].bits_per_pixel = 32;
-                // }
+				// if (emuelec_is_ogu) {
+				//	 osd_log_info("OGU logic, force OSD 480 854 480 1708 32");
+				//	 fb_def_var[index].xres = 480;
+				//	 fb_def_var[index].yres = 854;
+				//	 fb_def_var[index].xres_virtual = 480;
+				//	 fb_def_var[index].yres_virtual = 1708;
+				//	 fb_def_var[index].bits_per_pixel = 32;
+				// } else {
+					osd_log_info("Using vinfo %u %u %u %u %u as fbdef\n", var_screeninfo[0], var_screeninfo[1], var_screeninfo[2], var_screeninfo[3], var_screeninfo[4]);
+					fb_def_var[index].xres = var_screeninfo[0];
+					fb_def_var[index].yres = var_screeninfo[1];
+					fb_def_var[index].xres_virtual =
+						var_screeninfo[2];
+					fb_def_var[index].yres_virtual =
+						var_screeninfo[3];
+					fb_def_var[index].bits_per_pixel =
+						var_screeninfo[4];
+					osd_log_info("init fbdev bpp is:%d\n",
+						fb_def_var[index].bits_per_pixel);
+					if (fb_def_var[index].bits_per_pixel > 32)
+						fb_def_var[index].bits_per_pixel = 32;
+				// }
 			}
 		}
 

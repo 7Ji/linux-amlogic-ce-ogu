@@ -24,31 +24,31 @@
 		button@0 {
 			label = "GPIO BTN-VOLUP";
 			linux,code = <KEY_VOLUMEUP>;
-                        gpios = <&gpio GPIOX_8 GPIO_ACTIVE_LOW>;
+			gpios = <&gpio GPIOX_8 GPIO_ACTIVE_LOW>;
 		};
 		button@1 {
 			label = "GPIO BTN-VOLDN";
 			linux,code = <KEY_VOLUMEDOWN>;
-                        gpios = <&gpio GPIOX_9 GPIO_ACTIVE_LOW>;
+			gpios = <&gpio GPIOX_9 GPIO_ACTIVE_LOW>;
 		};
 	};
 
 	joypad: gou_joypad {
-                compatible = "odroidgou-joypad";
+		compatible = "odroidgou-joypad";
 		status = "okay";
 
-                joypad-name = "GO-Ultra Gamepad";
-                joypad-product = <0x1000>;
-                joypad-revision = <0x0100>;
+		joypad-name = "GO-Ultra Gamepad";
+		joypad-product = <0x1000>;
+		joypad-revision = <0x0100>;
 
-                /*
-                  - odroidgou-joypad sysfs list -
+		/*
+		   - odroidgou-joypad sysfs list -
 		   * for poll device interval(ms)
 		   /sys/devices/platform/gou_joypad/poll_interval [rw]
 		   ex) echo 20 > poll_interval
-                   * for button-adc-fuzz
+			* for button-adc-fuzz
 		   /sys/devices/platform/gou_joypad/adc_fuzz [r]
-                   * for button-adc-flat
+			* for button-adc-flat
 		   /sys/devices/platform/gou_joypad/adc_flat [r]
 
 		   * for report control(1:enable, 0:disable)
@@ -56,17 +56,17 @@
 		   * for adc calibration value setup(current adcs value -> cal value)
 		   /sys/devices/platform/gou_joypad/adc_cal [rw]
 		   ex) echo 0 > adc_cal
-                */
+		*/
 
 		/* gpio pincontrol setup */
-                /* pinctrl-names = "default"; */
-                /* pinctrl-0 = <&key_all_pins>; */
+		/* pinctrl-names = "default"; */
+		/* pinctrl-0 = <&key_all_pins>; */
 
 		/* Analog mux define */
 		io-channels = <&saradc SARADC_CH0>,
-			      <&saradc SARADC_CH1>,
-			      <&saradc SARADC_CH2>,
-			      <&saradc SARADC_CH3>;
+					<&saradc SARADC_CH1>,
+					<&saradc SARADC_CH2>,
+					<&saradc SARADC_CH3>;
 		io-channel-names = "key-RY", "key-RX", "key-LY", "key-LX";
 
 		/* adc calculate scale */
@@ -121,98 +121,98 @@
 		|              |-------------------|             |
 		|  sw11 sw12              |   |       sw13 sw14  |
 		|-------------------------|uSD|------------------| */
-                /*  joypad driver is poll-device driver.
-                    poll-device is does not support wakeup-source.
+		/*  joypad driver is poll-device driver.
+			poll-device is does not support wakeup-source.
 		*/
-                sw1 {
-                        gpios = <&gpio GPIOX_0 GPIO_ACTIVE_LOW>;
-                        label = "GPIO DPAD-UP";
-                        linux,code = <BTN_DPAD_UP>; // 0x220
-                };
-                sw2 {
-                        gpios = <&gpio GPIOX_1 GPIO_ACTIVE_LOW>;
-                        label = "GPIO DPAD-DOWN";
-                        linux,code = <BTN_DPAD_DOWN>; // 0x221
-                };
-                sw3 {
-                        gpios = <&gpio GPIOX_2 GPIO_ACTIVE_LOW>;
-                        label = "GPIO DPAD-LEFT";
-                        linux,code = <BTN_DPAD_LEFT>; // 0x222
-                };
-                sw4 {
-                        gpios = <&gpio GPIOX_3 GPIO_ACTIVE_LOW>;
-                        label = "GPIO DPAD-RIGHT";
-                        linux,code = <BTN_DPAD_RIGHT>; // 0x223
-                };
-                sw5 {
-                        gpios = <&gpio GPIOX_4 GPIO_ACTIVE_LOW>;
-                        label = "GPIO BTN-A";
-                        linux,code = <BTN_EAST>; // 0x131
-                };
-                sw6 {
-                        gpios = <&gpio GPIOX_5 GPIO_ACTIVE_LOW>;
-                        label = "GPIO BTN-B";
-                        linux,code = <BTN_SOUTH>; // 0x130
-                };
-                sw7 {
-                        gpios = <&gpio GPIOX_6 GPIO_ACTIVE_LOW>;
-                        label = "GPIO BTN-Y";
-                        linux,code = <BTN_WEST>; // 0x134
-                };
-                sw8 {
-                        gpios = <&gpio GPIOX_7 GPIO_ACTIVE_LOW>;
-                        label = "GPIO BTN-X";
-                        linux,code = <BTN_NORTH>; // 0x133
-                };
-                sw11 {
-                        gpios = <&gpio GPIOX_10 GPIO_ACTIVE_LOW>;
-                        label = "GPIO F2";
-                        linux,code = <BTN_TRIGGER_HAPPY2>; // 0x2c2
-                };
-                sw12 {
-                        gpios = <&gpio GPIOX_11 GPIO_ACTIVE_LOW>;
-                        label = "GPIO F3";
-                        linux,code = <BTN_TRIGGER_HAPPY3>; // 0x2c3
-                };
-                sw13 {
-                        gpios = <&gpio GPIOX_12 GPIO_ACTIVE_LOW>;
-                        label = "GPIO F4";
-                        linux,code = <BTN_TRIGGER_HAPPY4>; // 0x2c4
-                };
-                sw14 {
-                        gpios = <&gpio GPIOX_13 GPIO_ACTIVE_LOW>;
-                        label = "GPIO F5";
-                        linux,code = <BTN_TRIGGER_HAPPY5>; // 0x13c
-                };
-                sw15 {
-                        gpios = <&gpio GPIOX_14 GPIO_ACTIVE_LOW>;
-                        label = "GPIO TOP-LEFT";
-                        linux,code = <BTN_TL>; // 0x02
-                };
-                sw16 {
-                        gpios = <&gpio GPIOX_15 GPIO_ACTIVE_LOW>;
-                        label = "GPIO TOP-RIGHT";
-                        linux,code = <BTN_TR>; // 0x05
-                };
-                sw17 {
-                        gpios = <&gpio GPIOX_16 GPIO_ACTIVE_LOW>;
-                        label = "GPIO F6";
-                        linux,code = <BTN_TRIGGER_HAPPY6>;
-                };
-                sw18 {
-                        gpios = <&gpio GPIOX_17 GPIO_ACTIVE_LOW>;
-                        label = "GPIO F1";
-                        linux,code = <BTN_TRIGGER_HAPPY1>;
-                };
-                sw19 {
-                        gpios = <&gpio GPIOX_18 GPIO_ACTIVE_LOW>;
-                        label = "GPIO TOP-RIGHT2";
-                        linux,code = <BTN_TR2>;
-                };
-                sw20 {
-                        gpios = <&gpio GPIOX_19 GPIO_ACTIVE_LOW>;
-                        label = "GPIO TOP-LEFT2";
-                        linux,code = <BTN_TL2>;
-                };
-        };
+		sw1 {
+			gpios = <&gpio GPIOX_0 GPIO_ACTIVE_LOW>;
+			label = "GPIO DPAD-UP";
+			linux,code = <BTN_DPAD_UP>; // 0x220
+		};
+		sw2 {
+			gpios = <&gpio GPIOX_1 GPIO_ACTIVE_LOW>;
+			label = "GPIO DPAD-DOWN";
+			linux,code = <BTN_DPAD_DOWN>; // 0x221
+		};
+		sw3 {
+			gpios = <&gpio GPIOX_2 GPIO_ACTIVE_LOW>;
+			label = "GPIO DPAD-LEFT";
+			linux,code = <BTN_DPAD_LEFT>; // 0x222
+		};
+		sw4 {
+			gpios = <&gpio GPIOX_3 GPIO_ACTIVE_LOW>;
+			label = "GPIO DPAD-RIGHT";
+			linux,code = <BTN_DPAD_RIGHT>; // 0x223
+		};
+		sw5 {
+			gpios = <&gpio GPIOX_4 GPIO_ACTIVE_LOW>;
+			label = "GPIO BTN-A";
+			linux,code = <BTN_EAST>; // 0x131
+		};
+		sw6 {
+			gpios = <&gpio GPIOX_5 GPIO_ACTIVE_LOW>;
+			label = "GPIO BTN-B";
+			linux,code = <BTN_SOUTH>; // 0x130
+		};
+		sw7 {
+			gpios = <&gpio GPIOX_6 GPIO_ACTIVE_LOW>;
+			label = "GPIO BTN-Y";
+			linux,code = <BTN_WEST>; // 0x134
+		};
+		sw8 {
+			gpios = <&gpio GPIOX_7 GPIO_ACTIVE_LOW>;
+			label = "GPIO BTN-X";
+			linux,code = <BTN_NORTH>; // 0x133
+		};
+		sw11 {
+			gpios = <&gpio GPIOX_10 GPIO_ACTIVE_LOW>;
+			label = "GPIO F2";
+			linux,code = <BTN_TRIGGER_HAPPY2>; // 0x2c2
+		};
+		sw12 {
+			gpios = <&gpio GPIOX_11 GPIO_ACTIVE_LOW>;
+			label = "GPIO F3";
+			linux,code = <BTN_TRIGGER_HAPPY3>; // 0x2c3
+		};
+		sw13 {
+			gpios = <&gpio GPIOX_12 GPIO_ACTIVE_LOW>;
+			label = "GPIO F4";
+			linux,code = <BTN_TRIGGER_HAPPY4>; // 0x2c4
+		};
+		sw14 {
+			gpios = <&gpio GPIOX_13 GPIO_ACTIVE_LOW>;
+			label = "GPIO F5";
+			linux,code = <BTN_TRIGGER_HAPPY5>; // 0x13c
+		};
+		sw15 {
+			gpios = <&gpio GPIOX_14 GPIO_ACTIVE_LOW>;
+			label = "GPIO TOP-LEFT";
+			linux,code = <BTN_TL>; // 0x02
+		};
+		sw16 {
+			gpios = <&gpio GPIOX_15 GPIO_ACTIVE_LOW>;
+			label = "GPIO TOP-RIGHT";
+			linux,code = <BTN_TR>; // 0x05
+		};
+		sw17 {
+			gpios = <&gpio GPIOX_16 GPIO_ACTIVE_LOW>;
+			label = "GPIO F6";
+			linux,code = <BTN_TRIGGER_HAPPY6>;
+		};
+		sw18 {
+			gpios = <&gpio GPIOX_17 GPIO_ACTIVE_LOW>;
+			label = "GPIO F1";
+			linux,code = <BTN_TRIGGER_HAPPY1>;
+		};
+		sw19 {
+			gpios = <&gpio GPIOX_18 GPIO_ACTIVE_LOW>;
+			label = "GPIO TOP-RIGHT2";
+			linux,code = <BTN_TR2>;
+		};
+		sw20 {
+			gpios = <&gpio GPIOX_19 GPIO_ACTIVE_LOW>;
+			label = "GPIO TOP-LEFT2";
+			linux,code = <BTN_TL2>;
+		};
+	};
 };

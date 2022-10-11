@@ -38,7 +38,7 @@
  */
 static unsigned char mipi_init_on_table_ogu[] = {
 	0x13, 1, 0x01,
-	0xfd, 1, 5,	/* delay (ms) */
+	0xfd, 1, 5,		/* delay (ms) */
 	0x13, 1, 0x11,
 	0xfd, 1, 250,	/* delay (ms) */
 
@@ -48,9 +48,9 @@ static unsigned char mipi_init_on_table_ogu[] = {
 	0x29, 3, 0xC2, 0x31, 0x08,
 	0x23, 2, 0xCC, 0x10,
 	0x29,17, 0xB0, 0x00, 0x0D, 0x14, 0x0D, 0x10, 0x05, 0x02, 0x08,
-	         0x08, 0x1E, 0x05, 0x13, 0x11, 0xA3, 0x29, 0x18,
+			 0x08, 0x1E, 0x05, 0x13, 0x11, 0xA3, 0x29, 0x18,
 	0x29,17, 0xB1, 0x00, 0x0C, 0x14, 0x0C, 0x10, 0x05, 0x03, 0x08,
-	         0x07, 0x20, 0x05, 0x13, 0x11, 0xA4, 0x29, 0x18,
+			 0x07, 0x20, 0x05, 0x13, 0x11, 0xA4, 0x29, 0x18,
 	0x29, 6, 0xFF, 0x77, 0x01, 0x00, 0x00, 0x11,
 	0x23, 2, 0xB0, 0x6C,
 	0x23, 2, 0xB1, 0x43,
@@ -71,15 +71,15 @@ static unsigned char mipi_init_on_table_ogu[] = {
 	0x29, 5, 0xE3, 0x00, 0x00, 0x33, 0x33,
 	0x29, 3, 0xE4, 0x44, 0x44,
 	0x29,17, 0xE5, 0x0E, 0x60, 0xA0, 0xA0, 0x10, 0x60, 0xA0, 0xA0,
-	         0x0A, 0x60, 0xA0, 0xA0, 0x0C, 0x60, 0xA0, 0xA0,
+			 0x0A, 0x60, 0xA0, 0xA0, 0x0C, 0x60, 0xA0, 0xA0,
 	0x29, 5, 0xE6, 0x00, 0x00, 0x33, 0x33,
 	0x29, 3, 0xE7, 0x44, 0x44,
 	0x29,17, 0xE8, 0x0D, 0x60, 0xA0, 0xA0, 0x0F, 0x60, 0xA0, 0xA0,
-	         0x09, 0x60, 0xA0, 0xA0, 0x0B, 0x60, 0xA0, 0xA0,
+			 0x09, 0x60, 0xA0, 0xA0, 0x0B, 0x60, 0xA0, 0xA0,
 	0x29, 8, 0xEB, 0x02, 0x01, 0xE4, 0xE4, 0x44, 0x00, 0x40,
 	0x29, 3, 0xEC, 0x02, 0x01,
 	0x29,17, 0xED, 0xAB, 0x89, 0x76, 0x54, 0x01, 0xFF, 0xFF, 0xFF,
-	         0xFF, 0xFF, 0xFF, 0x10, 0x45, 0x67, 0x98, 0xBA,
+			 0xFF, 0xFF, 0xFF, 0x10, 0x45, 0x67, 0x98, 0xBA,
 	0x29, 6, 0xFF, 0x77, 0x01, 0x00, 0x00, 0x00,
 	0x23, 2, 0x3A, 0x70,
 	0x23, 2, 0x53, 0xEC,
@@ -94,7 +94,7 @@ static unsigned char mipi_init_on_table_generic[] = {
 	0x13, 1, 0x11,
 	//0x13, 1, 0x21,
 	//0x23, 2, 0x36, 0x00,
-	0xff, 200,     /* delay(ms) */
+	0xff, 200,	 /* delay(ms) */
 	0x29, 6, 0xff, 0x77, 0x01, 0x00, 0x00, 0x10,
 	0x29, 3, 0xc0, 0xe9, 0x03,
 	0x29, 3, 0xc1, 0x11, 0x02,
@@ -122,12 +122,12 @@ static unsigned char mipi_init_on_table_generic[] = {
 	0x23, 2, 0xd0, 0x88,
 
 	//-------End Power Control Registers Initial --
-	0xff, 100,     /* delay(ms) */
+	0xff, 100,	 /* delay(ms) */
 
 	//-----------GIP Setting---------------
 	0x29, 4, 0xe0, 0x00, 0x00, 0x02,
 	0x29, 12, 0xe1, 0x08, 0x00, 0x0a, 0x00, 0x07,
-		0x00, 0x09, 0x00, 0x00, 0x33, 0x33,
+			0x00, 0x09, 0x00, 0x00, 0x33, 0x33,
 	0x29, 14, 0xe2, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x29, 5, 0xe3, 0x00, 0x00, 0x33, 0x33,
@@ -146,11 +146,11 @@ static unsigned char mipi_init_on_table_generic[] = {
 		0xff, 0xff, 0xff, 0xff, 0x10, 0x45, 0x67, 0x98, 0xba,
 
 	//------- Power Control Registers Initial End-----
-	0xff, 10,     /* delay(ms) */
+	0xff, 10,	 /* delay(ms) */
 	0x29, 6, 0xff, 0x77, 0x01, 0x00, 0x00, 0x00,
 	0x13, 1, 0x29,
 	//0x13, 1, 0x2c,
-	0xff, 200,     /* delay(ms) */
+	0xff, 200,	 /* delay(ms) */
 	0xff, 0xff,   /* ending flag */
 };
 
@@ -164,9 +164,9 @@ static unsigned char mipi_init_off_table_ogu[] = {
 
 static unsigned char mipi_init_off_table_generic[] = {
 	0x05, 1, 0x28, /* display off */
-	0xff, 10,      /* delay 10ms */
+	0xff, 10,	  /* delay 10ms */
 	0x05, 1, 0x10, /* sleep in */
-	0xff, 150,      /* delay 150ms */
+	0xff, 150,	  /* delay 150ms */
 	0xff, 0xff,   /* ending flag */
 };
 
@@ -179,19 +179,19 @@ static int lcd_extern_driver_update(struct aml_lcd_extern_driver_s *ext_drv)
 
 	ext_drv->config->cmd_size = LCD_EXT_CMD_SIZE_DYNAMIC;
 
-    if (emuelec_is_ogu) {
-        EXTPR("OGU ST7001 update\n");
-        ext_drv->config->table_init_on  = &mipi_init_on_table_ogu[0];
-        ext_drv->config->table_init_on_cnt  = sizeof(mipi_init_on_table_ogu);
-        ext_drv->config->table_init_off = &mipi_init_off_table_ogu[0];
-        ext_drv->config->table_init_off_cnt  = sizeof(mipi_init_off_table_ogu);
-    } else {
-        EXTPR("Generic ST7001 update\n");
-        ext_drv->config->table_init_on  = &mipi_init_on_table_generic[0];
-        ext_drv->config->table_init_on_cnt  = sizeof(mipi_init_on_table_generic);
-        ext_drv->config->table_init_off = &mipi_init_off_table_generic[0];
-        ext_drv->config->table_init_off_cnt  = sizeof(mipi_init_off_table_generic);
-    }
+	if (emuelec_is_ogu) {
+		EXTPR("OGU ST7001 update\n");
+		ext_drv->config->table_init_on  = &mipi_init_on_table_ogu[0];
+		ext_drv->config->table_init_on_cnt  = sizeof(mipi_init_on_table_ogu);
+		ext_drv->config->table_init_off = &mipi_init_off_table_ogu[0];
+		ext_drv->config->table_init_off_cnt  = sizeof(mipi_init_off_table_ogu);
+	} else {
+		EXTPR("Generic ST7001 update\n");
+		ext_drv->config->table_init_on  = &mipi_init_on_table_generic[0];
+		ext_drv->config->table_init_on_cnt  = sizeof(mipi_init_on_table_generic);
+		ext_drv->config->table_init_off = &mipi_init_off_table_generic[0];
+		ext_drv->config->table_init_off_cnt  = sizeof(mipi_init_off_table_generic);
+	}
 
 	return 0;
 }
@@ -199,24 +199,24 @@ static int lcd_extern_driver_update(struct aml_lcd_extern_driver_s *ext_drv)
 int aml_lcd_extern_mipi_st7701_probe(struct aml_lcd_extern_driver_s *ext_drv)
 {
 	int ret = 0;
-    // char const *const ce_id = of_flat_dt_get_coreelec_dt_id();
-    // int ogu = 0;
-    // if (ce_id) {
-    //     if (!strcmp(ce_id, "g12b_s922x_odroid_go_ultra")) {
-    //         EXTPR("Device is OGU, running its specific init\n");
-    //         ogu = 1;
-    //     }
-    // } else {
-    //     EXTPR("Failed to get CE_ID to determine whether it's OGU or not\n");
-    // }
-    // if (of_property_read_string(of_root, "coreelec-dt-id", &model_name)) {
-    //     if (lcd_debug_print_flag) {
-	// 	    EXTPR("%s: %d\n", __func__, ret);
-    //     }
-    // } else if (!strcmp(model_name, "Hardkernel ODROID-GOU")) {
-    //     ogu = true;
-    // }
-    ret = lcd_extern_driver_update(ext_drv);
+	// char const *const ce_id = of_flat_dt_get_coreelec_dt_id();
+	// int ogu = 0;
+	// if (ce_id) {
+	//	 if (!strcmp(ce_id, "g12b_s922x_odroid_go_ultra")) {
+	//		 EXTPR("Device is OGU, running its specific init\n");
+	//		 ogu = 1;
+	//	 }
+	// } else {
+	//	 EXTPR("Failed to get CE_ID to determine whether it's OGU or not\n");
+	// }
+	// if (of_property_read_string(of_root, "coreelec-dt-id", &model_name)) {
+	//	 if (lcd_debug_print_flag) {
+	// 		EXTPR("%s: %d\n", __func__, ret);
+	//	 }
+	// } else if (!strcmp(model_name, "Hardkernel ODROID-GOU")) {
+	//	 ogu = true;
+	// }
+	ret = lcd_extern_driver_update(ext_drv);
 
 	if (lcd_debug_print_flag)
 		EXTPR("%s: %d\n", __func__, ret);

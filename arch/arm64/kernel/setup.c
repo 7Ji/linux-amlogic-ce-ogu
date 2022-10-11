@@ -202,11 +202,11 @@ static void __init setup_machine_fdt(phys_addr_t dt_phys)
 	name_dtid = of_flat_dt_get_coreelec_dt_id();
 	if (name_dtid) {
 		pr_info("CoreELEC dt-id: %s\n", name_dtid);
-        if (!strcmp(name_dtid, "g12b_s922x_odroid_go_ultra")) {
-            emuelec_is_ogu = true;
-            pr_info("EmuELEC OGU: Warning, OGU on CE kernel is still under heavy development, prepare for major breaks :) - 7Ji");
-        }
-    }
+		if (!strcmp(name_dtid, "g12b_s922x_odroid_go_ultra")) {
+			emuelec_is_ogu = true;
+			pr_info("EmuELEC OGU: Warning, OGU on CE kernel is still under heavy development, prepare for major breaks :) - 7Ji");
+		}
+	}
 
 	name = of_flat_dt_get_machine_name();
 	if (!name)
