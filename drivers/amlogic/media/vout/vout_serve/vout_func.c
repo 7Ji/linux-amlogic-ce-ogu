@@ -132,9 +132,9 @@ static inline int vout_func_check_state(int index, unsigned int state,
 		struct vout_server_s *p_server)
 {
 	if (state & ~(1 << index)) {
-		/*VOUTERR("vout%d: server %s is actived by another vout\n",
-		 *	index, p_server->name);
-		 */
+		VOUTERR("vout%d: server %s is actived by another vout\n",
+			index, p_server->name);
+		
 		return -1;
 	}
 
@@ -657,7 +657,7 @@ int vout_func_vout_unregister_server(int index,
 		VOUTERR("vout%d: server name is NULL\n", index);
 		return -1;
 	}
-	/*VOUTPR("vout%d: unregister server: %s\n", index, mem_server->name);*/
+	VOUTPR("vout%d: unregister server: %s\n", index, mem_server->name);
 
 	mutex_lock(&vout_mutex);
 
