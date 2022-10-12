@@ -31,12 +31,7 @@
 	/delete-node/ picdec;
 	/delete-node/ multi-di;
 
-	vout {
-		/delete-property/ fr_policy;
-	};
-
 	vout2 { // This is not a label, so it can't be simply disabled at the end
-		/delete-property/ fr_policy;
 		status = "disabled";
 	};
 
