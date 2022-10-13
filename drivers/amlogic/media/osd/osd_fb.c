@@ -388,6 +388,33 @@ struct ion_handle *fb_ion_handle[OSD_COUNT][OSD_MAX_BUF_NUM];
 
 static int osd_cursor(struct fb_info *fbi, struct fb_cursor *var);
 
+#ifdef CONFIG_ARCH_EMUELEC
+static int osd_set_fb_var(int index, const struct vinfo_s *vinfo)
+{
+	if ((vinfo->width < 0) || (vinfo->height < 0)) {
+		pr_err("invalid vinfo\n");
+		return 1;
+	}
+
+	fb_def_var[index].xres = vinfo->width;
+	fb_def_var[index].yres = vinfo->height;
+	fb_def_var[index].xres_virtual = vinfo->width;
+	fb_def_var[index].yres_virtual = vinfo->height * 2;
+	fb_def_var[index].bits_per_pixel = 32;
+
+	return 0;
+}
+
+static void osd_set_fb_parameters(int index, const struct vinfo_s *vinfo)
+{
+	osd_set_free_scale_enable_hw(index, 0);
+	osd_set_free_scale_mode_hw(index, 1);
+	osd_set_free_scale_axis_hw(index, 0, 0, vinfo->width, vinfo->height);
+	osd_set_window_axis_hw(index, 0, 0, vinfo->width, vinfo->height);
+	osd_enable_hw(index, 1);
+}
+#endif
+
 phys_addr_t get_fb_rmem_paddr(int index)
 {
 	if (index < 0 || index > 1)
@@ -4599,12 +4626,8 @@ static int osd_probe(struct platform_device *pdev)
 				osd_log_info("not found display_size_default\n");
 			else {
 #ifdef CONFIG_ARCH_EMUELEC
-				osd_log_info("Using vinfo %u %u %u %u %u as fbdef\n", 
-								var_screeninfo[0], 
-								var_screeninfo[1], 
-								var_screeninfo[2], 
-								var_screeninfo[3], 
-								var_screeninfo[4]);
+				if (osd_set_fb_var(index, vinfo)) {
+					osd_log_info("Failed to set fb using vinfo. Using display_size_default from DTS.\n");
 #endif
 				fb_def_var[index].xres = var_screeninfo[0];
 				fb_def_var[index].yres = var_screeninfo[1];
@@ -4614,10 +4637,21 @@ static int osd_probe(struct platform_device *pdev)
 					var_screeninfo[3];
 				fb_def_var[index].bits_per_pixel =
 					var_screeninfo[4];
+#ifdef CONFIG_ARCH_EMUELEC
+				}
+#endif
 				osd_log_info("init fbdev bpp is:%d\n",
 					fb_def_var[index].bits_per_pixel);
 				if (fb_def_var[index].bits_per_pixel > 32)
 					fb_def_var[index].bits_per_pixel = 32;
+#ifdef CONFIG_ARCH_EMUELEC
+				osd_log_info("fb def: %u %u %u %u %u\n",
+					fb_def_var[index].xres,
+					fb_def_var[index].yres,
+					fb_def_var[index].xres_virtual,
+					fb_def_var[index].yres_virtual,
+					fb_def_var[index].bits_per_pixel);
+#endif
 			}
 		}
 
@@ -4665,6 +4699,10 @@ static int osd_probe(struct platform_device *pdev)
 			for (i = 0; i < ARRAY_SIZE(osd_attrs_viu2); i++)
 			ret = device_create_file(fbi->dev, &osd_attrs_viu2[i]);
 		}
+#ifdef CONFIG_ARCH_EMUELEC
+		if (index == DEV_OSD0)
+			osd_set_fb_parameters(DEV_OSD0, vinfo);
+#endif
 	}
 #ifdef CONFIG_AMLOGIC_LEGACY_EARLY_SUSPEND
 	early_suspend.level = EARLY_SUSPEND_LEVEL_STOP_DRAWING;
