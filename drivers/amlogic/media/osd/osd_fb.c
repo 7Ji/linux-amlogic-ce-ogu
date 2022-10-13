@@ -56,6 +56,10 @@
 #ifdef CONFIG_AMLOGIC_VPU
 #include <linux/amlogic/media/vpu/vpu.h>
 #endif
+/* EmuELEC Headers */
+#ifdef CONFIG_ARCH_EMUELEC
+#include <linux/platform_data/emuelec.h>
+#endif
 /* Local Headers */
 #include "osd.h"
 #include "osd_fb.h"
