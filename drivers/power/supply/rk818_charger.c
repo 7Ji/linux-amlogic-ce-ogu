@@ -38,7 +38,6 @@
 
 #ifdef CONFIG_ARCH_EMUELEC
 #include <linux/amlogic/usbtype.h>
-#include <linux/platform_data/board_odroid.h>
 #endif
 
 static int dbg_enable = 0;
