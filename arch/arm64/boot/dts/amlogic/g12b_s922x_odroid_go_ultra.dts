@@ -34,6 +34,10 @@
 	/delete-node/ openvfd;
 	/delete-node/ amvideocap;
 
+	vout2 {
+		status = "disabled";
+	};
+
 	gpiomem {
 		compatible = "amlogic, gpiomem";
 		reg = <0x0 0xff634000 0x0 0x1000>,	/* GPIO banks */
