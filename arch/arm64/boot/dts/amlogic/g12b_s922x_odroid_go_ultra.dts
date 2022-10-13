@@ -434,39 +434,6 @@
 
 &ethmac {
 	status = "disabled";
-	/delete-property/ mc_val;
-	/delete-property/ internal_phy;
-	/delete-property/ pinctrl-names;
-	/delete-property/ pinctrl-0;
-};
-
-&external_eth_pins {
-	mux {
-		groups = "eth_mdio",
-		"eth_mdc",
-		"eth_rgmii_rx_clk",
-		"eth_rx_dv",
-		"eth_rxd0",
-		"eth_rxd1",
-		"eth_rxd2_rgmii",
-		"eth_rxd3_rgmii",
-		"eth_rgmii_tx_clk",
-		"eth_txen",
-		"eth_txd0",
-		"eth_txd1",
-		"eth_txd2_rgmii",
-		"eth_txd3_rgmii";
-	};
-};
-
-&pinctrl_aobus {
-	/delete-node/ spdifout;
-	/delete-node/ spdifout_a_mute;
-};
-
-&aml_spdif {
-	/delete-property/ pinctrl-0;
-	/delete-property/ pinctrl-1;
 };
 
 &usb2_phy_v2 {
@@ -485,11 +452,7 @@
 };
 
 &pcie_A {
-	reset-gpio = <&gpio GPIOX_7 GPIO_ACTIVE_HIGH>;
 	status = "disabled";
-	clock-names = "pcie_refpll",
-				"pcie",
-				"pcie_phy";
 };
 
 &usb3_phy_v2 {
@@ -504,71 +467,30 @@
 	status = "okay";
 };
 
-&i2c0 {
-	/delete-property/ pinctrl-names;
-	/delete-property/ pinctrl-0;
-	/delete-property/ clock-frequency;
-};
-
-&i2c2 {
-	/delete-property/ pinctrl-names;
-	/delete-property/ pinctrl-0;
-	/delete-property/ clock-frequency;
-};
-
 &isp {
 	status = "disabled";
-	temper-buf-size = <24>;
-	/delete-property/ temper-line-offset;
-	/delete-property/ temper-frame-num;
-	/delete-property/ temper-frame-size;
-	/delete-property/ memory-region;
 };
 
 &adapter {
 	status = "disabled";
-	mem_alloc = <48>;
-	/delete-property/ memory-region;
 };
 
 &amhdmitx {
 	status = "disabled";
-	interrupts = <0 57 1>;
-	interrupt-names = "hdmitx_hpd";
 };
 
 &aocec {
 	status = "disabled";
-	compatible = "amlogic, aocec-g12a";
-	ee_cec;
-	arc_port_mask = <0x02>;
-	/delete-property/ output;
 };
 
 &cbus {
 	spifc: spifc@14000 {
 		status = "disabled";
-		compatible = "amlogic,aml-spi-nor";
-		reg = <0x0 0x14000 0x0 0x80>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&spifc_all_pins>;
-		clocks = <&clkc 11>;
-		clock-names = "core";
    };
 };
 
 &uart_A {
 	status = "disabled";
-};
-
-&vdin0 {
-	/delete-property/ cma_size;
-	/delete-property/ tv_bit_mode;
-};
-
-&vdin1 {
-	/delete-property/ memory-region;
-	/delete-property/ tv_bit_mode;
 };
 
 &meson_cooldev {
