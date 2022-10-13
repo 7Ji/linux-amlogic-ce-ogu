@@ -31,8 +31,6 @@
 #include <linux/regulator/of_regulator.h>
 #include <linux/gpio/consumer.h>
 
-#define CONFIG_ARCH_MESON64_ODROID_COMMON
-
 /* Field Definitions */
 #define RK808_BUCK_VSEL_MASK	0x3f
 #define RK808_BUCK4_VSEL_MASK	0xf
@@ -1596,7 +1594,7 @@ static struct platform_driver rk808_regulator_driver = {
 
 module_platform_driver(rk808_regulator_driver);
 
-#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_EMUELEC
 static struct platform_driver rk818_regulator_driver = {
 	.probe = rk808_regulator_probe,
 	.driver = {

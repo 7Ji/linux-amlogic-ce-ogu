@@ -42,7 +42,10 @@
 /* Amlogic Headers */
 #include <linux/amlogic/media/vout/vout_notify.h>
 
+/* EmuELEC Headers */
+#ifdef CONFIG_ARCH_EMUELEC
 #include <linux/platform_data/emuelec.h>
+#endif
 
 /* Local Headers */
 #include "vout_func.h"
@@ -305,7 +308,7 @@ static int set_vout_init_mode(void)
 	enum vmode_e vmode;
 	unsigned int frac;
 	int ret = 0;
-#ifdef CONFIG_AMLOGIC_LCD
+#ifdef CONFIG_ARCH_EMUELEC
 	if (emuelec_is_ogu) {
 		VOUTPR("%s: OGU logic: set vout_mode_uboot to panel\n", __func__);
 		snprintf(vout_mode_uboot, VMODE_NAME_LEN_MAX, "%s", "panel");
@@ -317,7 +320,7 @@ static int set_vout_init_mode(void)
 
 	vout_init_vmode = validate_vmode(local_name, frac);
 	if (vout_init_vmode >= VMODE_MAX) {
-#ifdef CONFIG_AMLOGIC_LCD
+#ifdef CONFIG_ARCH_EMUELEC
 		if (emuelec_is_ogu) {
 			VOUTERR("OGU logic: no matched vout_init mode %s, force to panel\n",
 				vout_mode_uboot);
@@ -331,7 +334,7 @@ static int set_vout_init_mode(void)
 			vout_init_vmode = nulldisp_vinfo[nulldisp_index].mode;
 			snprintf(local_name, VMODE_NAME_LEN_MAX, "%s",
 				nulldisp_vinfo[nulldisp_index].name);
-#ifdef CONFIG_AMLOGIC_LCD
+#ifdef CONFIG_ARCH_EMUELEC
 		}
 #endif
 	} else { /* recover vout_mode_uboot */

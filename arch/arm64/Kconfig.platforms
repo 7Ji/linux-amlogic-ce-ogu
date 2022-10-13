@@ -232,4 +232,9 @@ config ARCH_ZYNQMP
 	help
 	  This enables support for Xilinx ZynqMP Family
 
+config ARCH_EMUELEC
+	bool "EmuELEC specific"
+	help
+	  This enables EmuELEC specific operations, including OGU co-existence
+
 endmenu

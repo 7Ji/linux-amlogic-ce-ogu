@@ -68,8 +68,6 @@
 #include "hdmi_tx_hdcp.h"
 #include "hdmi_tx_calibration.h"
 
-#define CONFIG_ARCH_MESON64_ODROID_COMMON
-
 #define HDMI_TX_COUNT 32
 #define HDMI_TX_POOL_NUM  6
 #define HDMI_TX_RESOURCE_NUM 4
@@ -7311,7 +7309,7 @@ static int __init hdmitx_get_phy_idx(char *str)
 
 __setup("phy_idx=", hdmitx_get_phy_idx);
 
-#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_EMUELEC
 void control_hdmiphy(bool on)
 {
 	hdmitx_device.hwop.cntlmisc(&hdmitx_device, MISC_TMDS_PHY_OP,

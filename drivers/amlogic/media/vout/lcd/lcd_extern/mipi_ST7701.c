@@ -27,7 +27,9 @@
 #include <linux/of.h>
 #include <linux/of_fdt.h>
 #include <linux/amlogic/media/vout/lcd/lcd_extern.h>
+#ifdef CONFIG_ARCH_EMUELEC
 #include <linux/platform_data/emuelec.h>
+#endif
 #include "lcd_extern.h"
 
 #define LCD_EXTERN_NAME			"mipi_ST7701"
@@ -36,6 +38,7 @@
  * format:  data_type, num, data....
  * special: data_type=0xff, num<0xff means delay ms, num=0xff means ending.
  */
+#ifdef CONFIG_ARCH_EMUELEC
 static unsigned char mipi_init_on_table_ogu[] = {
 	0x13, 1, 0x01,
 	0xfd, 1, 5,		/* delay (ms) */
@@ -91,6 +94,9 @@ static unsigned char mipi_init_on_table_ogu[] = {
 };
 
 static unsigned char mipi_init_on_table_generic[] = {
+#else
+static unsigned char mipi_init_on_table[] = {
+#endif
 	0x13, 1, 0x11,
 	//0x13, 1, 0x21,
 	//0x23, 2, 0x36, 0x00,
@@ -154,6 +160,7 @@ static unsigned char mipi_init_on_table_generic[] = {
 	0xff, 0xff,   /* ending flag */
 };
 
+#ifdef CONFIG_ARCH_EMUELEC
 static unsigned char mipi_init_off_table_ogu[] = {
 	0x05, 1, 0x28,	/* display off */
 	0xfd, 1, 10,	/* delay 10ms */
@@ -163,6 +170,9 @@ static unsigned char mipi_init_off_table_ogu[] = {
 };
 
 static unsigned char mipi_init_off_table_generic[] = {
+#else
+static unsigned char mipi_init_off_table[] = {
+#endif
 	0x05, 1, 0x28, /* display off */
 	0xff, 10,	  /* delay 10ms */
 	0x05, 1, 0x10, /* sleep in */
@@ -179,6 +189,7 @@ static int lcd_extern_driver_update(struct aml_lcd_extern_driver_s *ext_drv)
 
 	ext_drv->config->cmd_size = LCD_EXT_CMD_SIZE_DYNAMIC;
 
+#ifdef CONFIG_ARCH_EMUELEC
 	if (emuelec_is_ogu) {
 		EXTPR("OGU ST7001 update\n");
 		ext_drv->config->table_init_on  = &mipi_init_on_table_ogu[0];
@@ -192,6 +203,13 @@ static int lcd_extern_driver_update(struct aml_lcd_extern_driver_s *ext_drv)
 		ext_drv->config->table_init_off = &mipi_init_off_table_generic[0];
 		ext_drv->config->table_init_off_cnt  = sizeof(mipi_init_off_table_generic);
 	}
+#else
+	ext_drv->config->table_init_on  = &mipi_init_on_table[0];
+	ext_drv->config->table_init_on_cnt  = sizeof(mipi_init_on_table);
+	ext_drv->config->table_init_off = &mipi_init_off_table[0];
+	ext_drv->config->table_init_off_cnt  = sizeof(mipi_init_off_table);
+
+#endif
 
 	return 0;
 }
@@ -199,23 +217,6 @@ static int lcd_extern_driver_update(struct aml_lcd_extern_driver_s *ext_drv)
 int aml_lcd_extern_mipi_st7701_probe(struct aml_lcd_extern_driver_s *ext_drv)
 {
 	int ret = 0;
-	// char const *const ce_id = of_flat_dt_get_coreelec_dt_id();
-	// int ogu = 0;
-	// if (ce_id) {
-	//	 if (!strcmp(ce_id, "g12b_s922x_odroid_go_ultra")) {
-	//		 EXTPR("Device is OGU, running its specific init\n");
-	//		 ogu = 1;
-	//	 }
-	// } else {
-	//	 EXTPR("Failed to get CE_ID to determine whether it's OGU or not\n");
-	// }
-	// if (of_property_read_string(of_root, "coreelec-dt-id", &model_name)) {
-	//	 if (lcd_debug_print_flag) {
-	// 		EXTPR("%s: %d\n", __func__, ret);
-	//	 }
-	// } else if (!strcmp(model_name, "Hardkernel ODROID-GOU")) {
-	//	 ogu = true;
-	// }
 	ret = lcd_extern_driver_update(ext_drv);
 
 	if (lcd_debug_print_flag)

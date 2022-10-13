@@ -28,9 +28,7 @@
 #include <linux/regmap.h>
 #include <linux/syscore_ops.h>
 
-#define CONFIG_ARCH_MESON64_ODROID_COMMON
-
-#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_EMUELEC
 #include <linux/gpio.h>
 #include <linux/of_gpio.h>
 #include <linux/arm-smccc.h>
@@ -100,7 +98,7 @@ static struct rk808_reg_data *suspend_reg, *resume_reg;
 static int suspend_reg_num, resume_reg_num;
 
 
-#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_EMUELEC
 static noinline int psci_fn_smc(u64 function_id, u64 arg0, u64 arg1,
                                         u64 arg2)
 {
@@ -586,7 +584,7 @@ static struct regmap_irq_chip rk816_battery_irq_chip = {
 };
 
 static const struct mfd_cell rk818s[] = {
-#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_EMUELEC
 	{ .name = "rk818-regulator", },
 #else
 	{ .name = "rk808-clkout", },
@@ -602,7 +600,7 @@ static const struct mfd_cell rk818s[] = {
 };
 
 static const struct rk808_reg_data rk818_pre_init_reg[] = {
-#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_EMUELEC
 	{ RK818_BUCK1_ON_VSEL_REG, 0x3f, 0x1a},//vdd_cpu_a : default 1.0375
 	{ RK818_BUCK1_SLP_VSEL_REG, 0x3f, 0x1a},//vdd_cpu_a : default 1.0375
 	{ RK818_BUCK2_ON_VSEL_REG, 0x3f, 0x0d},//vdd_ee : default 0.875
@@ -651,7 +649,7 @@ static struct rk808_reg_data rk818_resume_reg[] = {
 };
 
 static const struct regmap_irq rk818_irqs[] = {
-#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_EMUELEC
 	/* INT_STS2 */
 	[RK818_IRQ_PLUG_IN] = {
 		.mask = PLUG_IN_MASK,
@@ -891,7 +889,7 @@ static struct regmap_irq_chip rk817_irq_chip = {
 };
 
 static const struct mfd_cell rk817s[] = {
-#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_EMUELEC
 	{ .name = "rk808-regulator",},
 	{
 		.name = "rk8xx-pwrkey",
@@ -925,7 +923,7 @@ static const struct mfd_cell rk817s[] = {
 };
 
 static const struct rk808_reg_data rk817_pre_init_reg[] = {
-#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_EMUELEC
 	{RK817_BUCK2_ON_VSEL_REG, 0x7f, 0x2B},	/*vddcpu_b : 1.0375 (default)*/
 	{RK817_BUCK3_ON_VSEL_REG, 0x7f, 0x20},	/*vcc_2v3 : 2.4 (default)*/
 
@@ -1169,7 +1167,7 @@ static int rk817_reboot_notifier_handler(struct notifier_block *nb,
 	struct rk817_reboot_data_t *data;
 	int ret;
 	struct device *dev;
-#ifndef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifndef CONFIG_ARCH_EMUELEC
 	int value, power_en_active0, power_en_active1;
 
 	regmap_read(data->rk808->regmap, RK817_POWER_EN_SAVE0,
@@ -1281,7 +1279,7 @@ static int rk808_probe(struct i2c_client *client,
 	void (*of_property_prepare_fn)(struct rk808 *rk808,
 				       struct device *dev) = NULL;
 	int (*pinctrl_init)(struct device *dev, struct rk808 *rk808) = NULL;
-#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_EMUELEC
 	int irq_gpio;
 	char sysfs_name[8];
 #endif
@@ -1313,7 +1311,7 @@ static int rk808_probe(struct i2c_client *client,
 	sprintf(sysfs_name, "rk%lx", rk808->variant);
 	dev_info(&client->dev, "Pmic Chip id: 0x%lx, sysfs: %s\n", rk808->variant,sysfs_name);
 
-#ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifdef CONFIG_ARCH_EMUELEC
 	irq_gpio = of_get_named_gpio(np, "gpio-irq", 0);
 	if (irq_gpio < 0) {
 		dev_err(&client->dev, "No interrupt pin, no core IRQ\n");

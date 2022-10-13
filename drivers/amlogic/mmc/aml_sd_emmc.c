@@ -42,7 +42,9 @@
 #include <linux/mmc/emmc_partitions.h>
 #include <linux/amlogic/amlsd.h>
 #include <linux/amlogic/aml_sd_emmc_v3.h>
+#ifdef CONFIG_ARCH_EMUELEC
 #include <linux/platform_data/emuelec.h>
+#endif
 
 struct mmc_host *sdio_host;
 
@@ -2968,6 +2970,7 @@ static int meson_mmc_get_cd(struct mmc_host *mmc)
 
 int aml_signal_voltage_switch(struct mmc_host *mmc, struct mmc_ios *ios)
 {
+#ifdef CONFIG_ARCH_EMUELEC
 	if (emuelec_is_ogu) {
 		pr_info("Voltage switch: OGU logic\n");
 		struct amlsd_platform *pdata = mmc_priv(mmc);
@@ -2985,8 +2988,11 @@ int aml_signal_voltage_switch(struct mmc_host *mmc, struct mmc_ios *ios)
 		return ret;
 	} else {
 		pr_info("Voltage switch: Generic logic\n");
+#endif
 		return aml_sd_voltage_switch(mmc, ios->signal_voltage);
+#ifdef CONFIG_ARCH_EMUELEC
 	}
+#endif
 }
 
 /* Check if the card is pulling dat[0:3] low */

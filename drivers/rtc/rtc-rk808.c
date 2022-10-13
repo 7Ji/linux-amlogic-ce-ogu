@@ -200,7 +200,7 @@ static int rk808_rtc_set_time(struct device *dev, struct rtc_time *tm)
 	return 0;
 }
 
-#ifndef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifndef CONFIG_ARCH_EMUELEC
 /* Read alarm time and date in RTC */
 static int rk808_rtc_readalarm(struct device *dev, struct rtc_wkalrm *alrm)
 {
@@ -353,7 +353,7 @@ static irqreturn_t rk808_alarm_irq(int irq, void *data)
 static const struct rtc_class_ops rk808_rtc_ops = {
 	.read_time = rk808_rtc_readtime,
 	.set_time = rk808_rtc_set_time,
-#ifndef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifndef CONFIG_ARCH_EMUELEC
 	.read_alarm = rk808_rtc_readalarm,
 	.set_alarm = rk808_rtc_setalarm,
 	.alarm_irq_enable = rk808_rtc_alarm_irq_enable,

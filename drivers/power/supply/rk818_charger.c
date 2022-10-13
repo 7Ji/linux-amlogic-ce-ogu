@@ -36,7 +36,7 @@
 #include <linux/workqueue.h>
 #include "rk818_battery.h"
 
-#if defined(CONFIG_ARCH_MESON64_ODROID_COMMON)
+#ifdef CONFIG_ARCH_EMUELEC
 #include <linux/amlogic/usbtype.h>
 #include <linux/platform_data/board_odroid.h>
 #endif
@@ -135,7 +135,7 @@ struct charger_platform_data {
 	int ts2_vol_multi;
 	struct temp_chrg_table *tc_table;
 	u32 tc_count;
-#if defined(CONFIG_ARCH_MESON64_ODROID_COMMON)
+#ifdef CONFIG_ARCH_EMUELEC
 	int chg_led_pin;
 	bool chg_led_on;
 #endif
@@ -162,7 +162,7 @@ struct rk818_charger {
 	struct delayed_work finish_sig_work;
 	struct delayed_work irq_work;
 	struct delayed_work ts2_vol_work;
-#if defined(CONFIG_ARCH_MESON64_ODROID_COMMON)
+#ifdef CONFIG_ARCH_EMUELEC
 	struct workqueue_struct *led_wq;
 	struct delayed_work led_work;
 #endif
@@ -755,7 +755,7 @@ static void rk818_cg_set_otg_power(struct rk818_charger *cg, int state)
 	}
 }
 
-#if defined(CONFIG_ARCH_MESON64_ODROID_COMMON)
+#ifdef CONFIG_ARCH_EMUELEC
 static void rk818_cg_led_worker(struct work_struct *work)
 {
 	struct rk818_charger *cg = container_of(work,
@@ -1177,7 +1177,7 @@ static int rk818_cg_init_dc(struct rk818_charger *cg)
 			cg->pdata->dc_det_pin);
 		return ret;
 	}
-#if defined(CONFIG_ARCH_MESON64_ODROID_COMMON)
+#ifdef CONFIG_ARCH_EMUELEC
 	gpiod_set_pull(gpio_to_desc(cg->pdata->dc_det_pin),
 			GPIOD_PULL_UP);
 #endif
@@ -1186,7 +1186,7 @@ static int rk818_cg_init_dc(struct rk818_charger *cg)
 		dev_err(cg->dev, "failed to set gpio input\n");
 		return ret;
 	}
-#if defined(CONFIG_ARCH_MESON64_ODROID_COMMON)
+#ifdef CONFIG_ARCH_EMUELEC
 	if (cg->pdata->chg_led_pin) {
 		ret = devm_gpio_request(cg->dev,
 					cg->pdata->chg_led_pin,
@@ -1388,7 +1388,7 @@ static long rk818_cg_init_usb(struct rk818_charger *cg)
 	} else {
 		INIT_DELAYED_WORK(&cg->usb_work, rk818_cg_bc_evt_worker);
 		cg->bc_nb.notifier_call = rk818_cg_bc_evt_notifier;
-#if defined(CONFIG_ARCH_MESON64_ODROID_COMMON)
+#ifdef CONFIG_ARCH_EMUELEC
 		bc_type = USB_BC_TYPE_DISCNT;
 		ret = dwc_otg_charger_detect_register_notifier(&cg->bc_nb);
 		if (ret) {
@@ -1722,7 +1722,7 @@ static int rk818_cg_parse_dt(struct rk818_charger *cg)
 			return -EINVAL;
 		}
 	}
-#if defined(CONFIG_ARCH_MESON64_ODROID_COMMON)
+#ifdef CONFIG_ARCH_EMUELEC
 	if (!of_find_property(np, "chg_led_gpio", &ret)) {
 		CG_INFO("not support charge led\n");
 		pdata->chg_led_pin = 0;
@@ -1845,7 +1845,7 @@ notify_fail:
 	destroy_workqueue(cg->dc_charger_wq);
 	destroy_workqueue(cg->finish_sig_wq);
 
-#if defined(CONFIG_ARCH_MESON64_ODROID_COMMON)
+#ifdef CONFIG_ARCH_EMUELEC
 	cancel_delayed_work_sync(&cg->led_work);
 	destroy_workqueue(cg->led_wq);
 #endif
@@ -1862,7 +1862,7 @@ notify_fail:
 		extcon_unregister_notifier(cg->cable_edev, EXTCON_USB,
 					   &cg->cable_discnt_nb);
 	} else {
-#if defined(CONFIG_ARCH_MESON64_ODROID_COMMON)
+#ifdef CONFIG_ARCH_EMUELEC
 		dwc_otg_charger_detect_unregister_notifier(&cg->bc_nb);
 #else
 		rk_bc_detect_notifier_unregister(&cg->bc_nb);
@@ -1896,7 +1896,7 @@ static void rk818_charger_shutdown(struct platform_device *pdev)
 	flush_workqueue(cg->dc_charger_wq);
 	flush_workqueue(cg->finish_sig_wq);
 
-#if defined(CONFIG_ARCH_MESON64_ODROID_COMMON)
+#ifdef CONFIG_ARCH_EMUELEC
 	cancel_delayed_work_sync(&cg->led_work);
 	destroy_workqueue(cg->led_wq);
 #endif
@@ -1913,7 +1913,7 @@ static void rk818_charger_shutdown(struct platform_device *pdev)
 		extcon_unregister_notifier(cg->cable_edev, EXTCON_USB,
 					   &cg->cable_discnt_nb);
 	} else {
-#if defined(CONFIG_ARCH_MESON64_ODROID_COMMON)
+#ifdef CONFIG_ARCH_EMUELEC
 		dwc_otg_charger_detect_unregister_notifier(&cg->bc_nb);
 #else
 		rk_bc_detect_notifier_unregister(&cg->bc_nb);

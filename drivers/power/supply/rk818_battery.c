@@ -3061,7 +3061,7 @@ static void rk818_battery_work(struct work_struct *work)
 			   msecs_to_jiffies(di->monitor_ms));
 }
 
-#ifndef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifndef CONFIG_ARCH_EMUELEC
 static irqreturn_t rk818_vb_low_irq(int irq, void *bat)
 {
 	struct rk818_battery *di = (struct rk818_battery *)bat;
@@ -3088,7 +3088,7 @@ static void rk818_bat_init_sysfs(struct rk818_battery *di)
 	}
 }
 
-#ifndef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifndef CONFIG_ARCH_EMUELEC
 static int rk818_bat_init_irqs(struct rk818_battery *di)
 {
 	struct rk808 *rk818 = di->rk818;
@@ -3437,7 +3437,7 @@ static int rk818_battery_probe(struct platform_device *pdev)
 		dev_err(di->dev, "no battery, virtual power mode\n");
 	}
 
-#ifndef CONFIG_ARCH_MESON64_ODROID_COMMON
+#ifndef CONFIG_ARCH_EMUELEC
 	ret = rk818_bat_init_irqs(di);
 	if (ret != 0) {
 		dev_err(di->dev, "rk818 bat init irqs failed!\n");
