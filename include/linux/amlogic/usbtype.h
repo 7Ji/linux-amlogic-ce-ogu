@@ -103,4 +103,5 @@ int device_status_v2(unsigned long usb_peri_reg);
 extern int dwc_otg_power_register_notifier(struct notifier_block *nb);
 extern int dwc_otg_power_unregister_notifier(struct notifier_block *nb);
 extern int dwc_otg_charger_detect_register_notifier(struct notifier_block *nb);
+extern int dwc_otg_charger_detect_unregister_notifier(struct notifier_block *nb);
 #endif
