@@ -4626,8 +4626,15 @@ static int osd_probe(struct platform_device *pdev)
 				osd_log_info("not found display_size_default\n");
 			else {
 #ifdef CONFIG_ARCH_EMUELEC
-				if (osd_set_fb_var(index, vinfo)) {
-					osd_log_info("Failed to set fb using vinfo. Using display_size_default from DTS.\n");
+				if (emuelec_is_ogu) {
+					osd_log_info("OGU logic: ignore all existing definition, hard define 480 854 480 1708 32\n");
+					fb_def_var[index].xres = 480;
+					fb_def_var[index].yres = 854;
+					fb_def_var[index].xres_virtual = 480;
+					fb_def_var[index].yres_virtual = 1708;
+					fb_def_var[index].bits_per_pixel = 32;
+				} else if (osd_set_fb_var(index, vinfo)) {
+					osd_log_info("failed to set fb using vinfo. Using display_size_default from DTS.\n");
 #endif
 				fb_def_var[index].xres = var_screeninfo[0];
 				fb_def_var[index].yres = var_screeninfo[1];
