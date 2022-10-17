@@ -64,6 +64,12 @@
 #ifdef CONFIG_AMLOGIC_MEDIA_SECURITY
 #include <linux/amlogic/media/vpu_secure/vpu_secure.h>
 #endif
+
+#ifdef CONFIG_ARCH_EMUELEC
+/* EmuELEC Headers */
+#include <linux/platform_data/emuelec.h>
+#endif
+
 /* Local Headers */
 #include "osd_canvas.h"
 #include "osd_prot.h"
@@ -10546,8 +10552,18 @@ void osd_init_hw(u32 logo_loaded, u32 osd_probe,
 	osd_hw.blend_bypass = 0;
 	osd_hw.afbc_err_cnt = 0;
 	osd_hw.osd_preblend_en = 0;
+#ifdef CONFIG_ARCH_EMUELEC
+	if (emuelec_is_ogu) {
+		pr_info("OGU OSD hw special init: 480x854 OSD hw\n");
+		osd_hw.fix_target_width = 480;
+		osd_hw.fix_target_height = 854;
+	} else {
+#endif
 	osd_hw.fix_target_width = 1920;
 	osd_hw.fix_target_height = 1080;
+#ifdef CONFIG_ARCH_EMUELEC
+	}
+#endif
 	if (osd_hw.osd_meson_dev.osd_ver == OSD_SIMPLE) {
 		data32 = osd_reg_read(
 			hw_osd_reg_array[OSD1].osd_fifo_ctrl_stat);
